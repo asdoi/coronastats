@@ -140,14 +140,14 @@ object WmCountriesParser : LiveTickerParser() {
     @Throws(IOException::class)
     fun downloadDocuments(vararg countries: String): Document {
         return Jsoup.connect(getAPIUrl(*countries))
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .get()
-                ?: throw IOException()
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .get()
+            ?: throw IOException()
     }
 
 
-    override fun parse(vararg countries: String): List<LiveTicker> {
-        return parse(downloadDocuments(*countries))
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return parse(downloadDocuments(*locations))
     }
 }

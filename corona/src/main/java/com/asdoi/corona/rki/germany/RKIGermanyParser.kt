@@ -120,8 +120,8 @@ object RKIGermanyParser : LiveTickerParser() {
         return Jsoup.connect(DOCUMENT_URL).get()
     }
 
-    override fun parse(vararg cities: String): List<LiveTicker> {
-        return if (cities.any { it.toUpperCase() == location.toUpperCase() })
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return if (locations.any { it.toUpperCase() == location.toUpperCase() })
             parse(downloadDocument())
         else
             listOf()

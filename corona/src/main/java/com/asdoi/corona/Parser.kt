@@ -16,14 +16,14 @@ import java.io.IOException
 object Parser : LiveTickerParser() {
 
     @Throws(IOException::class)
-    override fun parse(vararg cities: String): List<LiveTicker> {
-        if (cities.isEmpty())
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        if (locations.isEmpty())
             return listOf()
 
         var tickersLGL: List<LiveTicker> = listOf()
         val threadLGL = Thread {
             try {
-                tickersLGL = LGLParser.parse(*cities)
+                tickersLGL = LGLParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -32,7 +32,7 @@ object Parser : LiveTickerParser() {
         var tickersDistrictsRKI: List<LiveTicker> = listOf()
         val threadDistrictsRKI = Thread {
             try {
-                tickersDistrictsRKI = RKICountiesParser.parse(*cities)
+                tickersDistrictsRKI = RKICountiesParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -41,7 +41,7 @@ object Parser : LiveTickerParser() {
         var tickersCountiesRKI: List<LiveTicker> = listOf()
         val threadCountiesRKI = Thread {
             try {
-                tickersCountiesRKI = RKIStatesParser.parse(*cities)
+                tickersCountiesRKI = RKIStatesParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -50,7 +50,7 @@ object Parser : LiveTickerParser() {
         var tickerGermanyRKI: List<LiveTicker> = listOf()
         val threadGermanyRKI = Thread {
             try {
-                tickerGermanyRKI = RKIGermanyParser.parse(*cities)
+                tickerGermanyRKI = RKIGermanyParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -59,7 +59,7 @@ object Parser : LiveTickerParser() {
         var tickerJHU: List<LiveTicker> = listOf()
         val threadJHU = Thread {
             try {
-                tickerJHU = JHUParser.parse(*cities)
+                tickerJHU = JHUParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -68,7 +68,7 @@ object Parser : LiveTickerParser() {
         var tickersStatesWm: List<LiveTicker> = listOf()
         val threadStatesWm = Thread {
             try {
-                tickersStatesWm = WmStatesParser.parse(*cities)
+                tickersStatesWm = WmStatesParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -77,7 +77,7 @@ object Parser : LiveTickerParser() {
         var tickersCountriesWm: List<LiveTicker> = listOf()
         val threadCountriesWm = Thread {
             try {
-                tickersCountriesWm = WmCountriesParser.parse(*cities)
+                tickersCountriesWm = WmCountriesParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -86,7 +86,7 @@ object Parser : LiveTickerParser() {
         var tickersContinentsWm: List<LiveTicker> = listOf()
         val threadContinentsWm = Thread {
             try {
-                tickersContinentsWm = WmContinentsParser.parse(*cities)
+                tickersContinentsWm = WmContinentsParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -95,7 +95,7 @@ object Parser : LiveTickerParser() {
         var worldTicker: List<LiveTicker> = listOf()
         val threadWorldWm = Thread {
             try {
-                worldTicker = WmWorldParser.parse(*cities)
+                worldTicker = WmWorldParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

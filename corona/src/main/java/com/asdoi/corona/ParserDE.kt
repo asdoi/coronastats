@@ -12,14 +12,14 @@ import java.io.IOException
 object ParserDE : LiveTickerParser() {
 
     @Throws(IOException::class)
-    override fun parse(vararg cities: String): List<LiveTicker> {
-        if (cities.isEmpty())
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        if (locations.isEmpty())
             return listOf()
 
         var tickersLGL: List<LiveTicker> = listOf()
         val threadLGL = Thread {
             try {
-                tickersLGL = LGLParser.parse(*cities)
+                tickersLGL = LGLParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -28,7 +28,7 @@ object ParserDE : LiveTickerParser() {
         var tickersDistrictsRKI: List<LiveTicker> = listOf()
         val threadDistrictsRKI = Thread {
             try {
-                tickersDistrictsRKI = RKICountiesParser.parse(*cities)
+                tickersDistrictsRKI = RKICountiesParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -37,7 +37,7 @@ object ParserDE : LiveTickerParser() {
         var tickersCountiesRKI: List<LiveTicker> = listOf()
         val threadCountiesRKI = Thread {
             try {
-                tickersCountiesRKI = RKIStatesParser.parse(*cities)
+                tickersCountiesRKI = RKIStatesParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -46,7 +46,7 @@ object ParserDE : LiveTickerParser() {
         var tickerGermanyRKI: List<LiveTicker> = listOf()
         val threadGermanyRKI = Thread {
             try {
-                tickerGermanyRKI = RKIGermanyParser.parse(*cities)
+                tickerGermanyRKI = RKIGermanyParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -55,8 +55,8 @@ object ParserDE : LiveTickerParser() {
         var worldTicker: List<LiveTicker> = listOf()
         val threadWorldWm = Thread {
             try {
-                if (cities.any { it.toUpperCase() == WmWorldParser.location.toUpperCase() })
-                    worldTicker = WmWorldParser.parse(*cities)
+                if (locations.any { it.toUpperCase() == WmWorldParser.location.toUpperCase() })
+                    worldTicker = WmWorldParser.parse(*locations)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

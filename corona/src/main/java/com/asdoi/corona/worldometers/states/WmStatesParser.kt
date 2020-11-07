@@ -124,14 +124,14 @@ object WmStatesParser : LiveTickerParser() {
     @Throws(IOException::class)
     fun downloadDocuments(vararg states: String): Document {
         return Jsoup.connect(getAPIUrl(*states))
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .get()
-                ?: throw IOException()
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .get()
+            ?: throw IOException()
     }
 
 
-    override fun parse(vararg states: String): List<LiveTicker> {
-        return parse(downloadDocuments(*states))
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return parse(downloadDocuments(*locations))
     }
 }

@@ -124,7 +124,7 @@ object WmContinentsParser : LiveTickerParser() {
     }
 
 
-    override fun parse(vararg continents: String): List<LiveTicker> {
-        return parse(*downloadDocuments(*continents).toTypedArray())
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return parse(*downloadDocuments(*locations).toTypedArray())
     }
 }

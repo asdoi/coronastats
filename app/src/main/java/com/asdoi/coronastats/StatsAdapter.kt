@@ -51,7 +51,7 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
         }
 
         if (coronaTicker == null) {
-            bindMessageView(viewHolder, position)
+            bindMessageView(viewHolder)
         } else {
             bindCoronaTicker(viewHolder, coronaTicker)
         }
@@ -139,7 +139,7 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
         }
     }
 
-    private fun bindMessageView(viewHolder: StatsViewHolder, position: Int) {
+    private fun bindMessageView(viewHolder: StatsViewHolder) {
         viewHolder.expand.visibility = View.VISIBLE
         viewHolder.content.visibility = View.GONE
         viewHolder.divider.visibility = View.GONE

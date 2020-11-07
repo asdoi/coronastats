@@ -104,14 +104,14 @@ object WmWorldParser : LiveTickerParser() {
     @Throws(IOException::class)
     fun downloadDocument(): Document {
         return Jsoup.connect(DOCUMENT_URL)
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .get()
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .get()
     }
 
 
-    override fun parse(vararg cities: String): List<LiveTicker> {
-        return if (cities.any { it.toUpperCase() == location.toUpperCase() })
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return if (locations.any { it.toUpperCase() == location.toUpperCase() })
             parse(downloadDocument())
         else
             listOf()

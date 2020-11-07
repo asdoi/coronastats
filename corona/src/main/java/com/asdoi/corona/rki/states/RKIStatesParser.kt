@@ -158,7 +158,7 @@ object RKIStatesParser : LiveTickerParser() {
         return Jsoup.connect(DOCUMENT_URL).get()
     }
 
-    override fun parse(vararg cities: String): List<LiveTicker> {
-        return parse(downloadTableDocument(), *downloadDocuments(*cities).toTypedArray())
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return parse(downloadTableDocument(), *downloadDocuments(*locations).toTypedArray())
     }
 }

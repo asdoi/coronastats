@@ -105,13 +105,13 @@ object GovDEParser : LiveTickerParser() {
     @Throws(IOException::class)
     fun downloadDocument(): Document {
         return Jsoup.connect(DOCUMENT_URL)
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .get()
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .get()
     }
 
 
-    override fun parse(vararg counties: String): List<LiveTicker> {
-        return parse(downloadDocument(), *counties)
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return parse(downloadDocument(), *locations)
     }
 }

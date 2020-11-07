@@ -105,7 +105,7 @@ object RKICountiesParser : LiveTickerParser() {
         return documents
     }
 
-    override fun parse(vararg cities: String): List<LiveTicker> {
-        return parse(*downloadDocuments(*cities).toTypedArray())
+    override fun parse(vararg locations: String): List<LiveTicker> {
+        return parse(*downloadDocuments(*locations).toTypedArray())
     }
 }
