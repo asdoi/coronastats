@@ -1,0 +1,3 @@
+include ':corona'
+include ':app'
+rootProject.name = "CoronaStats"

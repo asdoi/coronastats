@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_internet_connection">Keine Internetverbindung!</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="add_city">Ort hinzufügen</string>
+    <string name="delete_city">Ort löschen</string>
+    <string name="please_add_a_city">Bitte einen Ort hinzufügen</string>
+    <string name="open_source_libraries">Open-Source Bibliotheken</string>
+    <string name="add">Hinzufügen</string>
+    <string name="city_not_found">Ort nicht gefunden</string>
+    <string name="show_worldwide_statistics">Weltweite Daten anzeigen</string>
+    <string name="hide_worldwide_statistics">Weltweite Daten ausblenden</string>
+    <string name="expand">Ausführlich</string>
+</resources>

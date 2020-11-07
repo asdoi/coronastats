@@ -1,0 +1,1 @@
+This app displays the current corona data of the respective areas in Germany

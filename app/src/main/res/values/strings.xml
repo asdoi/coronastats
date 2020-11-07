@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name" translatable="false">CoronaStatsDE</string>
+
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="refresh">Refresh</string>
+    <string name="add_city">Add city</string>
+    <string name="delete_city">Delete city</string>
+    <string name="please_add_a_city">Please add a city</string>
+    <string name="open_source_libraries">Open source libraries</string>
+    <string name="add">Add</string>
+    <string name="munich" translatable="false">München</string>
+    <string name="city_not_found">City not found</string>
+    <string name="show_worldwide_statistics">Show worldwide statistics</string>
+    <string name="hide_worldwide_statistics">Hide worldwide statistics</string>
+    <string name="expand">Expand</string>
+</resources>

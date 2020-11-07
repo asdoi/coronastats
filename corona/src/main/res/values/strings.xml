@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="total_infections">Total infections: %d</string>
+    <string name="change_from_previous_day">Change from previous day: %s</string>
+    <string name="total_infections_per_100_000">Total infections per 100,000: %.1f</string>
+    <string name="infections_in_the_last_seven_days">Infections in the last 7 days: %d</string>
+    <string name="seven_day_incidence_per_100_000">7-day incidence per 100,000: %.1f</string>
+    <string name="deaths">Deaths: %d</string>
+    <string name="infections_per_population">Infections per population: %.2f\%%</string>
+    <string name="death_rate">Death rate: %.2f\%%</string>
+    <string name="parsing_error">Parsing error</string>
+    <string name="data_source">Data source: %s</string>
+    <string name="last_update">Last update: %s</string>
+    <string name="recovered_infections">Recovered infections: %d</string>
+    <string name="recovered_infections_per_one_million">Recovered infections per one million: %.1f</string>
+    <string name="active_cases">Active cases: %d</string>
+    <string name="active_infections_per_one_million">Active infections per one million: %.1f</string>
+    <string name="critical_infections">Critical infections: %d</string>
+    <string name="critical_infections_per_one_million">Critical infections per one million: %.1f</string>
+    <string name="total_tests">Total tests: %d</string>
+    <string name="tests_per_one_million">Total tests per one million: %.1f</string>
+    <string name="one_test_per_persons">One Test per %d persons</string>
+    <string name="infections_per_one_million">Total Infections per one million: %.1f</string>
+    <string name="deaths_per_one_million">Deaths per one million: %.1f</string>
+    <string name="one_death_per_persons">One out of %d persons dies.</string>
+    <string name="one_infection_per_persons">One out of %d persons gets infected.</string>
+    <string name="affected_countries">Affected countries: %d</string>
+</resources>
