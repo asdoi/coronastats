@@ -47,10 +47,6 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
-        binding.swipeRefresh.setOnRefreshListener {
-            refreshRecyclerView()
-        }
-
         refreshRecyclerView()
     }
 
@@ -77,7 +73,6 @@ class MainActivity : AppCompatActivity() {
 
             runOnUiThread {
                 binding.loading.visibility = View.GONE
-                binding.swipeRefresh.isRefreshing = false
             }
         }.start()
     }
