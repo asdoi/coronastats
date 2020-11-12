@@ -146,7 +146,7 @@ object WmCountriesParser : LiveTickerParser() {
             ?: throw IOException()
     }
 
-
+    @Throws(IOException::class)
     override fun parse(vararg locations: String): List<LiveTicker> {
         return parse(downloadDocuments(*locations))
     }

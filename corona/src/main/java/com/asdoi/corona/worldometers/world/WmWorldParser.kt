@@ -109,7 +109,7 @@ object WmWorldParser : LiveTickerParser() {
             .get()
     }
 
-
+    @Throws(IOException::class)
     override fun parse(vararg locations: String): List<LiveTicker> {
         return if (locations.any { it.toUpperCase() == location.toUpperCase() })
             parse(downloadDocument())

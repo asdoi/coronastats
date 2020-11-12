@@ -106,7 +106,7 @@ object JHUParser : LiveTickerParser() {
                 .get()
     }
 
-
+    @Throws(IOException::class)
     override fun parse(vararg locations: String): List<LiveTicker> {
         return parse(downloadDocument(), *locations)
     }

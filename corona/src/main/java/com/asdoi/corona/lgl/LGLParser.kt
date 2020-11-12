@@ -159,6 +159,7 @@ object LGLParser : LiveTickerParser() {
         return Jsoup.connect(DOCUMENT_URL).get()
     }
 
+    @Throws(IOException::class)
     override fun parse(vararg locations: String): List<LiveTicker> {
         return parse(downloadDocument(), *locations)
     }
