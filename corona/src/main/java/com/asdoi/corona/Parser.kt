@@ -21,82 +21,106 @@ object Parser : LiveTickerParser() {
             return listOf()
 
         var tickersLGL: List<LiveTicker> = listOf()
+        var errorLGL = false
         val threadLGL = Thread {
             try {
                 tickersLGL = LGLParser.parse(*locations)
             } catch (e: Exception) {
+                errorLGL = true
                 e.printStackTrace()
             }
         }
 
         var tickersDistrictsRKI: List<LiveTicker> = listOf()
+        var errorDistrictsRKI = false
         val threadDistrictsRKI = Thread {
             try {
                 tickersDistrictsRKI = RKICountiesParser.parse(*locations)
             } catch (e: Exception) {
+                errorDistrictsRKI = true
                 e.printStackTrace()
             }
         }
 
         var tickersCountiesRKI: List<LiveTicker> = listOf()
+        var errorCountiesRKI = false
         val threadCountiesRKI = Thread {
             try {
                 tickersCountiesRKI = RKIStatesParser.parse(*locations)
             } catch (e: Exception) {
+                errorCountiesRKI = true
                 e.printStackTrace()
             }
         }
 
         var tickerGermanyRKI: List<LiveTicker> = listOf()
+        var errorGermanyRKI = false
         val threadGermanyRKI = Thread {
             try {
-                tickerGermanyRKI = RKIGermanyParser.parse(*locations)
+                if (locations.any { it.toUpperCase() == RKIGermanyParser.location.toUpperCase() })
+                    tickerGermanyRKI = RKIGermanyParser.parse(*locations)
+                else
+                    errorGermanyRKI = true
             } catch (e: Exception) {
+                errorGermanyRKI = true
                 e.printStackTrace()
             }
         }
 
         var tickerJHU: List<LiveTicker> = listOf()
+        var errorJHU = false
         val threadJHU = Thread {
             try {
                 tickerJHU = JHUParser.parse(*locations)
             } catch (e: Exception) {
+                errorJHU = true
                 e.printStackTrace()
             }
         }
 
         var tickersStatesWm: List<LiveTicker> = listOf()
+        var errorStatesWm = false
         val threadStatesWm = Thread {
             try {
                 tickersStatesWm = WmStatesParser.parse(*locations)
             } catch (e: Exception) {
+                errorStatesWm = true
                 e.printStackTrace()
             }
         }
 
         var tickersCountriesWm: List<LiveTicker> = listOf()
+        var errorCountriesWm = false
         val threadCountriesWm = Thread {
             try {
                 tickersCountriesWm = WmCountriesParser.parse(*locations)
             } catch (e: Exception) {
+                errorCountriesWm = true
                 e.printStackTrace()
             }
         }
 
         var tickersContinentsWm: List<LiveTicker> = listOf()
+        var errorContinentsWm = false
         val threadContinentsWm = Thread {
             try {
                 tickersContinentsWm = WmContinentsParser.parse(*locations)
             } catch (e: Exception) {
+                errorContinentsWm = true
                 e.printStackTrace()
             }
         }
 
         var worldTicker: List<LiveTicker> = listOf()
+        var errorWorldTicker = false
         val threadWorldWm = Thread {
             try {
-                worldTicker = WmWorldParser.parse(*locations)
+                if (locations.any { it.toUpperCase() == WmWorldParser.location.toUpperCase() })
+                    worldTicker = WmWorldParser.parse(WmWorldParser.location)
+                else
+                    errorWorldTicker = true
             } catch (e: Exception) {
+                errorWorldTicker = true
                 e.printStackTrace()
             }
         }
@@ -125,28 +149,31 @@ object Parser : LiveTickerParser() {
         } catch (ignore: Exception) {
         }
 
-        try {
+        val tickers: MutableList<LiveTicker> = mutableListOf()
+        tickers.addAll(tickersLGL)
+        tickers.addAll(tickersDistrictsRKI)
+        tickers.addAll(tickersCountiesRKI)
+        tickers.addAll(tickerGermanyRKI)
+        tickers.addAll(tickersStatesWm)
+        tickers.addAll(tickerJHU)
+        tickers.addAll(tickersCountriesWm)
+        tickers.addAll(tickersContinentsWm)
+        tickers.addAll(worldTicker)
 
-            val tickers: MutableList<LiveTicker> = mutableListOf()
-            tickers.addAll(tickersLGL)
-            tickers.addAll(tickersDistrictsRKI)
-            tickers.addAll(tickersCountiesRKI)
-            tickers.addAll(tickerGermanyRKI)
-            tickers.addAll(tickersStatesWm)
-            tickers.addAll(tickerJHU)
-            tickers.addAll(tickersCountriesWm)
-            tickers.addAll(tickersContinentsWm)
-            tickers.addAll(worldTicker)
-
-            if (tickers.isEmpty()) {
-                throw IOException()
-            }
-
-            return parse(tickers)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return listOf(ParseError(ParseError.INTERNAL_ERROR, ParseError.INTERNAL_ERROR, e))
+        if (errorLGL &&
+            errorDistrictsRKI &&
+            errorCountiesRKI &&
+            errorGermanyRKI &&
+            errorJHU &&
+            errorStatesWm &&
+            errorCountriesWm &&
+            errorContinentsWm &&
+            errorWorldTicker
+        ) {
+            throw IOException()
         }
+
+        return parse(tickers)
     }
 
 
@@ -156,7 +183,7 @@ object Parser : LiveTickerParser() {
 
         for (city in cities) {
             val cityTickers: List<LiveTicker> =
-                    liveTickers.filter { it.location.toUpperCase() == city.toUpperCase() }
+                liveTickers.filter { it.location.toUpperCase() == city.toUpperCase() }
 
             var cityTicker: LiveTicker? = null
             for (ticker in cityTickers) {
@@ -184,15 +211,15 @@ object Parser : LiveTickerParser() {
     }
 
     fun parseNoErrors(liveTickers: List<LiveTicker>, vararg cities: String) =
-            parse(liveTickers, *cities).filter { !it.isError() }
+        parse(liveTickers, *cities).filter { !it.isError() }
 
     fun parseNoInternalErrors(liveTickers: List<LiveTicker>, vararg cities: String) =
-            parse(liveTickers, *cities).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(liveTickers, *cities).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
 
     fun parse(liveTickers: List<LiveTicker>): List<LiveTicker> {
@@ -209,7 +236,7 @@ object Parser : LiveTickerParser() {
                 continue
 
             val cityTickers: List<LiveTicker> =
-                    liveTickers.filter { it.location.toUpperCase() == ticker.location.toUpperCase() }
+                liveTickers.filter { it.location.toUpperCase() == ticker.location.toUpperCase() }
 
             var cityTicker: LiveTicker? = null
             for (otherTickers in cityTickers) {
@@ -237,13 +264,13 @@ object Parser : LiveTickerParser() {
     }
 
     fun parseNoErrors(liveTickers: List<LiveTicker>) =
-            parse(liveTickers).filter { !it.isError() }
+        parse(liveTickers).filter { !it.isError() }
 
     fun parseNoInternalErrors(liveTickers: List<LiveTicker>) =
-            parse(liveTickers).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(liveTickers).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 }
