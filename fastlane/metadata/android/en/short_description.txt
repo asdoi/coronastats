@@ -1,0 +1,1 @@
+Displays the current corona data of the respective areas in Germany
