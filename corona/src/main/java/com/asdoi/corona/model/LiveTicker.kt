@@ -48,6 +48,7 @@ abstract class LiveTicker(
                     LightColor.YELLOW -> R.color.light_yellow
                     LightColor.RED -> R.color.light_red
                     LightColor.DEEP_RED -> R.color.light_deep_red
+                    LightColor.PURPLE -> R.color.light_purple
                     LightColor.ERROR -> R.color.error_light
                     LightColor.NO_COLOR -> R.color.no_color
                 }

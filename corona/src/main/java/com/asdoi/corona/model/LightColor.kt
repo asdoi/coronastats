@@ -6,5 +6,6 @@ enum class LightColor {
     GREEN,
     YELLOW,
     RED,
-    DEEP_RED
+    DEEP_RED,
+    PURPLE
 }

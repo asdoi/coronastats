@@ -109,10 +109,11 @@ class LGLTicker(
                 "https://www.lgl.bayern.de/gesundheit/infektionsschutz/infektionskrankheiten_a_z/coronavirus/karte_coronavirus/index.htm"
 
         private fun calculateLightColor(value: Int) = when (value) {
-            in 0 until 35 -> LightColor.GREEN
-            in 35 until 50 -> LightColor.YELLOW
+            in 0 until 25 -> LightColor.GREEN
+            in 25 until 50 -> LightColor.YELLOW
             in 50 until 100 -> LightColor.RED
-            else -> LightColor.DEEP_RED
+            in 100 until 200 -> LightColor.DEEP_RED
+            else -> LightColor.PURPLE
         }
     }
 }
