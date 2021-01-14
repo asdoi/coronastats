@@ -4,7 +4,7 @@
 [![Stars](https://img.shields.io/badge/dynamic/json.svg?style=social&label=Stars&url=https://gitlab.com/api/v4/projects/22258695&query=star_count&logo=gitlab)]()  
 
 This app displays the current corona data, e.g. total infections, deaths, etc., of the respective areas in Germany.  
-In addition, the colors of the corona traffic lights are displayed in order to have clarity at a glance about possible restrictions (7-day incidence per 100,000 population <35: green ; <50: yellow ; >50: red ; In Bavaria >100: dark red).  
+In addition, the colors of the corona traffic lights are displayed in order to have clarity at a glance about possible restrictions (7-day incidence per 100,000 population <35: green ; <50: yellow ; <100: red ; <200: dark red ; >200 purple (Hotspot)).  
 Only the current data is displayed, no histories over several days.
 
 ### The following data sources are used:
@@ -35,6 +35,6 @@ Add the dependency
 
 
 ### Screenshots:
-<img src="https://gitlab.com/asdoi/coronastatsde-beta/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/Screen1.png?inline=false" width="25%">
-<img src="https://gitlab.com/asdoi/coronastatsde-beta/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/Screen2.png?inline=false" width="25%">
-<img src="https://gitlab.com/asdoi/coronastatsde-beta/-/raw/master/fastlane/metadata/android/en-US/images/phoneScreenshots/Screen3.png?inline=false" width="25%">
+<img src="https://gitlab.com/asdoi/coronastats/-/raw/master/fastlane/metadata/android/en_US/images/phoneScreenshots/Screen1.png?inline=false" width="25%">
+<img src="https://gitlab.com/asdoi/coronastats/-/raw/master/fastlane/metadata/android/en_US/images/phoneScreenshots/Screen2.png?inline=false" width="25%">
+<img src="https://gitlab.com/asdoi/coronastats/-/raw/master/fastlane/metadata/android/en_US/images/phoneScreenshots/Screen3.png?inline=false" width="25%">

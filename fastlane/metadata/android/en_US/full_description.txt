@@ -1,6 +1,6 @@
 This app displays the current corona data, e.g. total infections, deaths, etc., of the respective areas in Germany.
 
-In addition, the colors of the corona traffic lights are displayed in order to have clarity at a glance about possible restrictions (7-day incidence per 100,000 population <35: green ; <50: yellow ; >50: red ; In Bavaria >100: dark red).
+In addition, the colors of the corona traffic lights are displayed in order to have clarity at a glance about possible restrictions (7-day incidence per 100,000 population <35: green ; <50: yellow ; <100: red ; <200: dark red ; >200 purple (Hotspot)).
 
 Only the current data is displayed, no histories over several days.
 

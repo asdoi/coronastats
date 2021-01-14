@@ -1,6 +1,6 @@
 Diese App zeigt die aktuellen Corona-Daten, z.B. Gesamtinfektionen, Todesfälle, etc., der jeweiligen Gebieten in Deutschland an.
 
-Zusätzlich werden die Farben der Corona-Ampel angezeigt um auf einen Blick Klarheit über mögliche Einschränkungen zu haben(7-Tage-Inzidenz pro 100.000 EW <35: Grün ; <50: Gelb ; >50: Rot ; In Bayern >100: Dunkelrot).
+Zusätzlich werden die Farben der Corona-Ampel angezeigt um auf einen Blick Klarheit über mögliche Einschränkungen zu haben(7-Tage-Inzidenz pro 100.000 EW <35: Grün ; <50: Gelb ; <100: Rot ; <200 Dunkelrot ; >200: Lila (Hotspot)).
 
 Es werden immer nur die aktuellen Daten angezeigt, keine Verläufe über mehrere Tage.
 
