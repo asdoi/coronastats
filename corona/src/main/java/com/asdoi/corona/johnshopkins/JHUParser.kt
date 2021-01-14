@@ -39,35 +39,35 @@ object JHUParser : LiveTickerParser() {
                         val recovered = stats.getInt("recovered")
                         val updatedAt = jsonObject.getString("updatedAt")
                         val lastUpdate: Calendar =
-                                try {
-                                    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                            try {
+                                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
-                                    val calendar = Calendar.getInstance()
-                                    calendar.time = dateFormat.parse(updatedAt)!!
-                                    calendar
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                    Calendar.getInstance()
-                                }
+                                val calendar = Calendar.getInstance()
+                                calendar.time = dateFormat.parse(updatedAt)!!
+                                calendar
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                Calendar.getInstance()
+                            }
 
                         tickers.add(
-                                JHUTicker(
-                                        location,
-                                        lastUpdate,
-                                        confirmed,
-                                        deaths,
-                                        recovered
-                                )
+                            JHUTicker(
+                                location,
+                                lastUpdate,
+                                confirmed,
+                                deaths,
+                                recovered
+                            )
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
                         tickers.add(
-                                ParseError(
-                                        location,
-                                        JHUTicker.DATA_SOURCE,
-                                        JHUTicker.VISIBLE_DATA_SOURCE,
-                                        e
-                                )
+                            ParseError(
+                                location,
+                                JHUTicker.DATA_SOURCE,
+                                JHUTicker.VISIBLE_DATA_SOURCE,
+                                e
+                            )
                         )
                     }
                 }
@@ -76,7 +76,7 @@ object JHUParser : LiveTickerParser() {
         } catch (e: Exception) {
             e.printStackTrace()
             tickers.add(
-                    ParseError(JHUTicker.DATA_SOURCE, JHUTicker.VISIBLE_DATA_SOURCE, e)
+                ParseError(JHUTicker.DATA_SOURCE, JHUTicker.VISIBLE_DATA_SOURCE, e)
             )
         }
 
@@ -88,22 +88,22 @@ object JHUParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(document: Document, vararg locations: String) =
-            parse(document, *locations).filter { !it.isError() }
+        parse(document, *locations).filter { !it.isError() }
 
     fun parseNoInternalErrors(document: Document, vararg locations: String) =
-            parse(document, *locations).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(document, *locations).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocument(): Document {
         return Jsoup.connect(DOCUMENT_URL)
-                .ignoreHttpErrors(true)
-                .ignoreContentType(true)
-                .get()
+            .ignoreHttpErrors(true)
+            .ignoreContentType(true)
+            .get()
     }
 
     @Throws(IOException::class)

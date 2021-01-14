@@ -62,40 +62,40 @@ object WmStatesParser : LiveTickerParser() {
 
                     val lastUpdateMillis = jsonObject.getString("updated")
                     val lastUpdate: Calendar =
-                            try {
-                                val calendar = Calendar.getInstance()
-                                calendar.timeInMillis = lastUpdateMillis.toLong()
-                                calendar
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                Calendar.getInstance()
-                            }
+                        try {
+                            val calendar = Calendar.getInstance()
+                            calendar.timeInMillis = lastUpdateMillis.toLong()
+                            calendar
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Calendar.getInstance()
+                        }
 
                     tickers.add(
-                            WmStatesTicker(
-                                    location,
-                                    lastUpdate,
-                                    cases,
-                                    todayCases,
-                                    casesPerMillion,
-                                    active,
-                                    recovered,
-                                    deaths,
-                                    todayDeaths,
-                                    deathsPerMillion,
-                                    tests,
-                                    testsPerMillion,
-                            )
+                        WmStatesTicker(
+                            location,
+                            lastUpdate,
+                            cases,
+                            todayCases,
+                            casesPerMillion,
+                            active,
+                            recovered,
+                            deaths,
+                            todayDeaths,
+                            deathsPerMillion,
+                            tests,
+                            testsPerMillion,
+                        )
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
                     tickers.add(
-                            ParseError(
-                                    location,
-                                    WmStatesTicker.DATA_SOURCE,
-                                    WmStatesTicker.VISIBLE_DATA_SOURCE,
-                                    e
-                            )
+                        ParseError(
+                            location,
+                            WmStatesTicker.DATA_SOURCE,
+                            WmStatesTicker.VISIBLE_DATA_SOURCE,
+                            e
+                        )
                     )
                 }
             } catch (ignore: Exception) {
@@ -111,15 +111,15 @@ object WmStatesParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(vararg documents: Document) =
-            parse(*documents).filter { !it.isError() }
+        parse(*documents).filter { !it.isError() }
 
     fun parseNoInternalErrors(vararg documents: Document) =
-            parse(*documents).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(*documents).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocuments(vararg states: String): Document {

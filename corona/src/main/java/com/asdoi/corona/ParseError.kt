@@ -8,24 +8,24 @@ import java.util.*
 
 
 class ParseError(
-        location: String,
-        dataSource: String,
-        linkToVisibleData: String,
-        val exception: Exception
+    location: String,
+    dataSource: String,
+    linkToVisibleData: String,
+    val exception: Exception
 ) : LiveTicker(
-        Priority.NONE,
-        location,
-        Calendar.getInstance(),
-        dataSource,
-        linkToVisibleData,
-        -1, -1,
-        LightColor.ERROR
+    Priority.NONE,
+    location,
+    Calendar.getInstance(),
+    dataSource,
+    linkToVisibleData,
+    -1, -1,
+    LightColor.ERROR
 ) {
     constructor(dataSource: String, linkToVisibleData: String, exception: Exception) : this(
-            INTERNAL_ERROR,
-            dataSource,
-            linkToVisibleData,
-            exception
+        INTERNAL_ERROR,
+        dataSource,
+        linkToVisibleData,
+        exception
     )
 
     override fun summary(context: Context): String {

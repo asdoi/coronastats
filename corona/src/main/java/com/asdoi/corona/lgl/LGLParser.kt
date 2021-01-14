@@ -11,7 +11,7 @@ import java.util.*
 
 object LGLParser : LiveTickerParser() {
     private const val DOCUMENT_URL =
-            "https://www.lgl.bayern.de/gesundheit/infektionsschutz/infektionskrankheiten_a_z/coronavirus/karte_coronavirus/"
+        "https://www.lgl.bayern.de/gesundheit/infektionsschutz/infektionskrankheiten_a_z/coronavirus/karte_coronavirus/"
     private const val PUBLICATION_VAR = "var publikationsDatum = "
 
     private fun parseLiveTickers(doc: Document, vararg cities: String): List<LiveTicker> {
@@ -24,24 +24,24 @@ object LGLParser : LiveTickerParser() {
 
         try {
             val date: Calendar =
-                    try {
-                        var dateText =
-                                doc.select("#content #content_1c ").toString().split("<script>")[1]
-                        val index =
-                                dateText.indexOf(PUBLICATION_VAR) + PUBLICATION_VAR.length + 1
-                        dateText = dateText.substring(index, index + 10)
+                try {
+                    var dateText =
+                        doc.select("#content #content_1c ").toString().split("<script>")[1]
+                    val index =
+                        dateText.indexOf(PUBLICATION_VAR) + PUBLICATION_VAR.length + 1
+                    dateText = dateText.substring(index, index + 10)
 
-                        val dateFormat = SimpleDateFormat("dd.MM.yyy", Locale.GERMANY)
+                    val dateFormat = SimpleDateFormat("dd.MM.yyy", Locale.GERMANY)
 
-                        val calendar = Calendar.getInstance()
-                        calendar.time = dateFormat.parse(dateText)!!
-                        //The hour is always 8 o'clock (hardcoded)
-                        calendar.set(Calendar.HOUR_OF_DAY, 8)
-                        calendar
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Calendar.getInstance()
-                    }
+                    val calendar = Calendar.getInstance()
+                    calendar.time = dateFormat.parse(dateText)!!
+                    //The hour is always 8 o'clock (hardcoded)
+                    calendar.set(Calendar.HOUR_OF_DAY, 8)
+                    calendar
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Calendar.getInstance()
+                }
 
             val table = doc.select("table#tableLandkreise")
             val rows = table.select("tbody tr")
@@ -51,78 +51,78 @@ object LGLParser : LiveTickerParser() {
             val infectionsIndex: Int = headline.indexOf("Anzahl der Fälle")
             val infectionsYesterdayTodayIndex: Int = headline.indexOf("Fälle Änderung zum Vortag")
             val infectionsPerOneHundredThousandsIndex: Int =
-                    headline.indexOf("Fallzahl pro 100.000 Einwohner")
+                headline.indexOf("Fallzahl pro 100.000 Einwohner")
             val infectionsInTheLastSevenDaysIndex: Int =
-                    headline.indexOf("Fälle der letzten 7 Tage")
+                headline.indexOf("Fälle der letzten 7 Tage")
             val sevenDayIncidencePerOneHundredThousandsIndex: Int =
-                    headline.indexOf("7-Tage-Inzidenz pro 100.000 Einwohner")
+                headline.indexOf("7-Tage-Inzidenz pro 100.000 Einwohner")
             val deathsIndex: Int = headline.indexOf("Anzahl der Todesfälle")
             val deathsYesterdayTodayIndex: Int = headline.indexOf("Todesfälle Änderung zum Vortag")
 
             for (line in 1 until rows.size) {
                 val row = rows[line].select("td").eachText()
                 if (citiesList.contains(row[cityIndex].toUpperCase())
-                        || citiesList.contains(row[cityIndex].toUpperCase().removeSuffix(" STADT"))
+                    || citiesList.contains(row[cityIndex].toUpperCase().removeSuffix(" STADT"))
                 ) {
                     val location =
-                            if (citiesList.contains(row[cityIndex].toUpperCase().removeSuffix(" STADT"))
-                            ) {
-                                row[cityIndex].removeSuffix(" Stadt")
-                            } else {
-                                row[cityIndex]
-                            }
+                        if (citiesList.contains(row[cityIndex].toUpperCase().removeSuffix(" STADT"))
+                        ) {
+                            row[cityIndex].removeSuffix(" Stadt")
+                        } else {
+                            row[cityIndex]
+                        }
 
                     citiesList.remove(location.toUpperCase())
 
                     try {
                         val infections = row[infectionsIndex].replace(".", "").toInt()
                         val infectionsYesterdayTodayString = row[infectionsYesterdayTodayIndex]
-                                .replace("(", "").replace(")", "").replace("+", "").replace(" ", "")
-                                .replace(".", "").trim()
+                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "")
+                            .replace(".", "").trim()
                         val infectionsYesterdayToday =
-                                if (infectionsYesterdayTodayString == "-")
-                                    0
-                                else infectionsYesterdayTodayString.toInt()
+                            if (infectionsYesterdayTodayString == "-")
+                                0
+                            else infectionsYesterdayTodayString.toInt()
                         val infectionsPerOneHundredThousands =
-                                row[infectionsPerOneHundredThousandsIndex].replace(".", "")
-                                        .replace(",", ".").toDouble()
+                            row[infectionsPerOneHundredThousandsIndex].replace(".", "")
+                                .replace(",", ".").toDouble()
                         val infectionsInTheLastSevenDays =
-                                row[infectionsInTheLastSevenDaysIndex].replace(".", "").toInt()
+                            row[infectionsInTheLastSevenDaysIndex].replace(".", "").toInt()
                         val sevenDayIncidencePerOneHundredThousands =
-                                row[sevenDayIncidencePerOneHundredThousandsIndex].replace(".", "")
-                                        .replace(",", ".")
-                                        .toDouble()
+                            row[sevenDayIncidencePerOneHundredThousandsIndex].replace(".", "")
+                                .replace(",", ".")
+                                .toDouble()
                         val deaths = row[deathsIndex].replace(".", "").toInt()
                         val deathsYesterdayTodayString = row[deathsYesterdayTodayIndex]
-                                .replace("(", "").replace(")", "").replace("+", "").replace(" ", "")
-                                .replace(".", "").trim()
+                            .replace("(", "").replace(")", "").replace("+", "").replace(" ", "")
+                            .replace(".", "").trim()
                         val deathsYesterdayToday =
-                                if (deathsYesterdayTodayString == "-")
-                                    0
-                                else deathsYesterdayTodayString.toInt()
+                            if (deathsYesterdayTodayString == "-")
+                                0
+                            else deathsYesterdayTodayString.toInt()
 
                         tickers.add(
-                                LGLTicker(
-                                        location,
-                                        date,
-                                        infections,
-                                        infectionsYesterdayToday,
-                                        infectionsPerOneHundredThousands,
-                                        infectionsInTheLastSevenDays,
-                                        sevenDayIncidencePerOneHundredThousands,
-                                        deaths,
-                                        deathsYesterdayToday
-                                )
+                            LGLTicker(
+                                location,
+                                date,
+                                infections,
+                                infectionsYesterdayToday,
+                                infectionsPerOneHundredThousands,
+                                infectionsInTheLastSevenDays,
+                                sevenDayIncidencePerOneHundredThousands,
+                                deaths,
+                                deathsYesterdayToday
+                            )
                         )
                     } catch (e: Exception) {
                         e.printStackTrace()
                         tickers.add(
-                                ParseError(
-                                        row[cityIndex],
-                                        LGLTicker.DATA_SOURCE,
-                                        LGLTicker.VISIBLE_DATA_SOURCE,
-                                        e
-                                )
+                            ParseError(
+                                row[cityIndex],
+                                LGLTicker.DATA_SOURCE,
+                                LGLTicker.VISIBLE_DATA_SOURCE,
+                                e
+                            )
                         )
                     }
                 }
@@ -131,7 +131,7 @@ object LGLParser : LiveTickerParser() {
         } catch (e: Exception) {
             e.printStackTrace()
             tickers.add(
-                    ParseError(LGLTicker.DATA_SOURCE, LGLTicker.VISIBLE_DATA_SOURCE, e)
+                ParseError(LGLTicker.DATA_SOURCE, LGLTicker.VISIBLE_DATA_SOURCE, e)
             )
         }
 
@@ -144,15 +144,15 @@ object LGLParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(document: Document, vararg cities: String) =
-            parse(document, *cities).filter { !it.isError() }
+        parse(document, *cities).filter { !it.isError() }
 
     fun parseNoInternalErrors(document: Document, vararg cities: String) =
-            parse(document, *cities).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(document, *cities).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocument(): Document {

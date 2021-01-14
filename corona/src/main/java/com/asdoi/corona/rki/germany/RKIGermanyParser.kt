@@ -12,7 +12,7 @@ import java.util.*
 
 object RKIGermanyParser : LiveTickerParser() {
     private const val DOCUMENT_URL =
-            "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"
+        "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"
 
     const val location = "Deutschland"
 
@@ -20,22 +20,22 @@ object RKIGermanyParser : LiveTickerParser() {
         val tickers: MutableList<LiveTicker> = mutableListOf()
         try {
             val lastUpdate: Calendar =
-                    try {
-                        var dateText =
-                                document.select("#content #main .text p")[0].text()
-                        dateText = dateText.removePrefix("Stand: ")
-                        dateText =
-                                dateText.substring(0, dateText.indexOf("Uhr")).trim().replace(" ", "")
+                try {
+                    var dateText =
+                        document.select("#content #main .text p")[0].text()
+                    dateText = dateText.removePrefix("Stand: ")
+                    dateText =
+                        dateText.substring(0, dateText.indexOf("Uhr")).trim().replace(" ", "")
 
-                        val dateFormat = SimpleDateFormat("dd.MM.yyy,HH:mm", Locale.GERMANY)
+                    val dateFormat = SimpleDateFormat("dd.MM.yyy,HH:mm", Locale.GERMANY)
 
-                        val calendar = Calendar.getInstance()
-                        calendar.time = dateFormat.parse(dateText)!!
-                        calendar
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Calendar.getInstance()
-                    }
+                    val calendar = Calendar.getInstance()
+                    calendar.time = dateFormat.parse(dateText)!!
+                    calendar
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Calendar.getInstance()
+                }
 
             val table = document.select("#content #main .text table")[0]
             val rows = table.select("tbody tr")
@@ -43,9 +43,9 @@ object RKIGermanyParser : LiveTickerParser() {
             val headline = table.select("thead tr")[1].select("th").eachText()
             val casesIndex = headline.indexOf("Anzahl") + 1
             val todayCasesIndex =
-                    headline.indexOf("Differenz zum Vortag") + 1
+                headline.indexOf("Differenz zum Vortag") + 1
             val casesInTheLast7DaysIndex =
-                    headline.indexOf("Fälle in den letzten 7 Tagen") + 1
+                headline.indexOf("Fälle in den letzten 7 Tagen") + 1
             val sevenDayIncidenceHundredThousandIndex = headline.indexOf("7-Tage- Inzidenz") + 1
             val deathsIndex = headline.indexOf("Todesfälle") + 1
 
@@ -55,45 +55,45 @@ object RKIGermanyParser : LiveTickerParser() {
                     val cases = columns[casesIndex].replace(".", "").toInt()
 
                     val todayCasesString =
-                            columns[todayCasesIndex].replace("+", "")
-                                    .replace(".", "").trim()
+                        columns[todayCasesIndex].replace("+", "")
+                            .replace(".", "").trim()
                     val todayCases =
-                            if (todayCasesString == "-")
-                                0
-                            else todayCasesString.toInt()
+                        if (todayCasesString == "-")
+                            0
+                        else todayCasesString.toInt()
 
                     val casesInTheLast7Days =
-                            columns[casesInTheLast7DaysIndex].replace(".", "")
-                                    .trim().toInt()
+                        columns[casesInTheLast7DaysIndex].replace(".", "")
+                            .trim().toInt()
 
                     val sevenDayIncidencePerOneHundredThousands =
-                            columns[sevenDayIncidenceHundredThousandIndex].replace(",", ".")
-                                    .toDouble()
+                        columns[sevenDayIncidenceHundredThousandIndex].replace(",", ".")
+                            .toDouble()
 
                     val deaths = columns[deathsIndex].replace(".", "").toInt()
 
                     tickers.add(
-                            RKIGermanyTicker(
-                                    location,
-                                    lastUpdate,
-                                    cases,
-                                    deaths,
-                                    todayCases,
-                                    casesInTheLast7Days,
-                                    sevenDayIncidencePerOneHundredThousands
-                            )
+                        RKIGermanyTicker(
+                            location,
+                            lastUpdate,
+                            cases,
+                            deaths,
+                            todayCases,
+                            casesInTheLast7Days,
+                            sevenDayIncidencePerOneHundredThousands
+                        )
                     )
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             tickers.add(
-                    ParseError(
-                            location,
-                            RKIGermanyTicker.DATA_SOURCE,
-                            RKIGermanyTicker.VISIBLE_DATA_SOURCE,
-                            e
-                    )
+                ParseError(
+                    location,
+                    RKIGermanyTicker.DATA_SOURCE,
+                    RKIGermanyTicker.VISIBLE_DATA_SOURCE,
+                    e
+                )
             )
         }
 
@@ -105,15 +105,15 @@ object RKIGermanyParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(tableDocument: Document) =
-            parse(tableDocument).filter { !it.isError() }
+        parse(tableDocument).filter { !it.isError() }
 
     fun parseNoInternalErrors(tableDocument: Document) =
-            parse(tableDocument).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(tableDocument).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocument(): Document {

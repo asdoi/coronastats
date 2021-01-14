@@ -35,43 +35,43 @@ object GovDEParser : LiveTickerParser() {
                         val cases = jsonObject.getInt("cases")
                         val casePreviousDayChange = jsonObject.getInt("casePreviousDayChange")
                         val casesPerHundredThousand =
-                                jsonObject.getDouble("casesPerHundredThousand")
+                            jsonObject.getDouble("casesPerHundredThousand")
                         val sevenDayCasesPerHundredThousand =
-                                jsonObject.getDouble("sevenDayCasesPerHundredThousand")
+                            jsonObject.getDouble("sevenDayCasesPerHundredThousand")
                         val deaths = jsonObject.getInt("deaths")
 
                         val lastUpdateMillis = jsonObject.getString("updated")
                         val lastUpdate: Calendar =
-                                try {
-                                    val calendar = Calendar.getInstance()
-                                    calendar.timeInMillis = lastUpdateMillis.toLong()
-                                    calendar
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                    Calendar.getInstance()
-                                }
+                            try {
+                                val calendar = Calendar.getInstance()
+                                calendar.timeInMillis = lastUpdateMillis.toLong()
+                                calendar
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                Calendar.getInstance()
+                            }
 
                         tickers.add(
-                                GovDETicker(
-                                        location,
-                                        lastUpdate,
-                                        cases,
-                                        casePreviousDayChange,
-                                        casesPerHundredThousand,
-                                        sevenDayCasesPerHundredThousand,
-                                        deaths
-                                )
+                            GovDETicker(
+                                location,
+                                lastUpdate,
+                                cases,
+                                casePreviousDayChange,
+                                casesPerHundredThousand,
+                                sevenDayCasesPerHundredThousand,
+                                deaths
+                            )
                         )
 
                     } catch (e: Exception) {
                         e.printStackTrace()
                         tickers.add(
-                                ParseError(
-                                        location,
-                                        GovDETicker.DATA_SOURCE,
-                                        GovDETicker.VISIBLE_DATA_SOURCE,
-                                        e
-                                )
+                            ParseError(
+                                location,
+                                GovDETicker.DATA_SOURCE,
+                                GovDETicker.VISIBLE_DATA_SOURCE,
+                                e
+                            )
                         )
                     }
                 }
@@ -80,7 +80,7 @@ object GovDEParser : LiveTickerParser() {
         } catch (e: Exception) {
             e.printStackTrace()
             tickers.add(
-                    ParseError(GovDETicker.DATA_SOURCE, GovDETicker.VISIBLE_DATA_SOURCE, e)
+                ParseError(GovDETicker.DATA_SOURCE, GovDETicker.VISIBLE_DATA_SOURCE, e)
             )
         }
 
@@ -92,15 +92,15 @@ object GovDEParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(document: Document, vararg counties: String) =
-            parse(document, *counties).filter { !it.isError() }
+        parse(document, *counties).filter { !it.isError() }
 
     fun parseNoInternalErrors(document: Document, vararg counties: String) =
-            parse(document, *counties).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(document, *counties).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocument(): Document {

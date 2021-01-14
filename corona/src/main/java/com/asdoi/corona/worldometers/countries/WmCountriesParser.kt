@@ -70,48 +70,48 @@ object WmCountriesParser : LiveTickerParser() {
 
                     val lastUpdateMillis = jsonObject.getString("updated")
                     val lastUpdate: Calendar =
-                            try {
-                                val calendar = Calendar.getInstance()
-                                calendar.timeInMillis = lastUpdateMillis.toLong()
-                                calendar
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                Calendar.getInstance()
-                            }
+                        try {
+                            val calendar = Calendar.getInstance()
+                            calendar.timeInMillis = lastUpdateMillis.toLong()
+                            calendar
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Calendar.getInstance()
+                        }
 
                     tickers.add(
-                            WmCountriesTicker(
-                                    location,
-                                    lastUpdate,
-                                    cases,
-                                    todayCases,
-                                    casesPerMillion,
-                                    casePerPeople,
-                                    active,
-                                    activePerMillion,
-                                    critical,
-                                    criticalPerMillion,
-                                    recovered,
-                                    todayRecovered,
-                                    recoveredPerMillion,
-                                    deaths,
-                                    todayDeaths,
-                                    deathsPerMillion,
-                                    deathPerPeople,
-                                    tests,
-                                    testsPerMillion,
-                                    testPerPeople
-                            )
+                        WmCountriesTicker(
+                            location,
+                            lastUpdate,
+                            cases,
+                            todayCases,
+                            casesPerMillion,
+                            casePerPeople,
+                            active,
+                            activePerMillion,
+                            critical,
+                            criticalPerMillion,
+                            recovered,
+                            todayRecovered,
+                            recoveredPerMillion,
+                            deaths,
+                            todayDeaths,
+                            deathsPerMillion,
+                            deathPerPeople,
+                            tests,
+                            testsPerMillion,
+                            testPerPeople
+                        )
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
                     tickers.add(
-                            ParseError(
-                                    location,
-                                    WmCountriesTicker.DATA_SOURCE,
-                                    WmCountriesTicker.VISIBLE_DATA_SOURCE,
-                                    e
-                            )
+                        ParseError(
+                            location,
+                            WmCountriesTicker.DATA_SOURCE,
+                            WmCountriesTicker.VISIBLE_DATA_SOURCE,
+                            e
+                        )
                     )
                 }
             } catch (ignore: Exception) {
@@ -127,15 +127,15 @@ object WmCountriesParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(vararg documents: Document) =
-            parse(*documents).filter { !it.isError() }
+        parse(*documents).filter { !it.isError() }
 
     fun parseNoInternalErrors(vararg documents: Document) =
-            parse(*documents).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(*documents).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocuments(vararg countries: String): Document {

@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewManager = LinearLayoutManager(this)
         viewAdapter = StatsAdapter(
-                this, listOf()
+            this, listOf()
         )
         recyclerView = binding.recyclerView.apply {
             // use this setting to improve performance if you know that changes
@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity() {
     fun addCityDialog() {
         MaterialDialog(this).show {
             input(
-                    hintRes = R.string.munich,
-                    inputType = InputType.TYPE_CLASS_TEXT
+                hintRes = R.string.munich,
+                inputType = InputType.TYPE_CLASS_TEXT
             ) { _, text ->
                 val city = text.toString()
 
@@ -101,10 +101,10 @@ class MainActivity : AppCompatActivity() {
 
                         runOnUiThread {
                             ChocoBar.builder().setView(binding.root)
-                                    .setText(R.string.city_not_found)
-                                    .setDuration(ChocoBar.LENGTH_LONG)
-                                    .red()
-                                    .show()
+                                .setText(R.string.city_not_found)
+                                .setDuration(ChocoBar.LENGTH_LONG)
+                                .red()
+                                .show()
                         }
                     }
                 }.start()
@@ -117,14 +117,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveCity(city: String) {
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putString(PREF_CITIES, "${this.getCitiesString()}$DIVIDER${city.toUpperCase()}")
-                .apply()
+            .putString(PREF_CITIES, "${this.getCitiesString()}$DIVIDER${city.toUpperCase()}")
+            .apply()
         invalidateOptionsMenu()
     }
 
     private fun getCitiesString() =
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .getString(PREF_CITIES, "")!!
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .getString(PREF_CITIES, "")!!
 
     fun getCities(): MutableList<String> {
         val cities = getCitiesString().split(DIVIDER).toMutableList()
@@ -145,8 +145,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putString(PREF_CITIES, saveString.toString())
-                .apply()
+            .putString(PREF_CITIES, saveString.toString())
+            .apply()
 
         refreshRecyclerView()
         invalidateOptionsMenu()
@@ -184,12 +184,12 @@ class MainActivity : AppCompatActivity() {
             R.id.action_add_city -> addCityDialog()
             R.id.action_info -> {
                 LibsBuilder()
-                        .withActivityTitle(getString(R.string.open_source_libraries))
-                        .withAboutIconShown(true)
-                        .withFields(R.string::class.java.fields)
-                        .withLicenseShown(true)
-                        .withAboutAppName(getString(R.string.app_name))
-                        .start(this)
+                    .withActivityTitle(getString(R.string.open_source_libraries))
+                    .withAboutIconShown(true)
+                    .withFields(R.string::class.java.fields)
+                    .withLicenseShown(true)
+                    .withAboutAppName(getString(R.string.app_name))
+                    .start(this)
             }
             R.id.action_switch_world -> {
                 if (isWorldWide())

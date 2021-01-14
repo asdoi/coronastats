@@ -42,45 +42,45 @@ object WmContinentsParser : LiveTickerParser() {
 
                     val lastUpdateMillis = jsonObject.getString("updated")
                     val lastUpdate: Calendar =
-                            try {
-                                val calendar = Calendar.getInstance()
-                                calendar.timeInMillis = lastUpdateMillis.toLong()
-                                calendar
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                Calendar.getInstance()
-                            }
+                        try {
+                            val calendar = Calendar.getInstance()
+                            calendar.timeInMillis = lastUpdateMillis.toLong()
+                            calendar
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Calendar.getInstance()
+                        }
 
                     tickers.add(
-                            WmContinentsTicker(
-                                    location,
-                                    lastUpdate,
-                                    cases,
-                                    todayCases,
-                                    casesPerMillion,
-                                    active,
-                                    activePerMillion,
-                                    critical,
-                                    criticalPerMillion,
-                                    recovered,
-                                    todayRecovered,
-                                    recoveredPerMillion,
-                                    deaths,
-                                    todayDeaths,
-                                    deathsPerMillion,
-                                    tests,
-                                    testsPerMillion
-                            )
+                        WmContinentsTicker(
+                            location,
+                            lastUpdate,
+                            cases,
+                            todayCases,
+                            casesPerMillion,
+                            active,
+                            activePerMillion,
+                            critical,
+                            criticalPerMillion,
+                            recovered,
+                            todayRecovered,
+                            recoveredPerMillion,
+                            deaths,
+                            todayDeaths,
+                            deathsPerMillion,
+                            tests,
+                            testsPerMillion
+                        )
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
                     tickers.add(
-                            ParseError(
-                                    location,
-                                    WmContinentsTicker.DATA_SOURCE,
-                                    WmContinentsTicker.VISIBLE_DATA_SOURCE,
-                                    e
-                            )
+                        ParseError(
+                            location,
+                            WmContinentsTicker.DATA_SOURCE,
+                            WmContinentsTicker.VISIBLE_DATA_SOURCE,
+                            e
+                        )
                     )
                 }
             } catch (ignore: Exception) {
@@ -96,24 +96,24 @@ object WmContinentsParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(vararg documents: Document) =
-            parse(*documents).filter { !it.isError() }
+        parse(*documents).filter { !it.isError() }
 
     fun parseNoInternalErrors(vararg documents: Document) =
-            parse(*documents).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        parse(*documents).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocuments(vararg continents: String): List<Document> {
         val documents: MutableList<Document> = mutableListOf()
         for (continent in continents) {
             val document = Jsoup.connect(getAPIUrl(continent))
-                    .ignoreHttpErrors(true)
-                    .ignoreContentType(true)
-                    .get()
+                .ignoreHttpErrors(true)
+                .ignoreContentType(true)
+                .get()
 
             if (document != null)
                 documents.add(document)

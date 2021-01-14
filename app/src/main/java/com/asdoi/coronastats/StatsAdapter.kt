@@ -24,7 +24,7 @@ import com.asdoi.corona.model.LiveTicker
 private const val FADE_IN_DURATION = 300
 
 class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
-        RecyclerView.Adapter<StatsViewHolder>() {
+    RecyclerView.Adapter<StatsViewHolder>() {
     var data = data
         set(value) {
             field = value
@@ -34,11 +34,11 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
     private var onAttach = true
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): StatsViewHolder {
         val entryView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.stats_entry, parent, false) as CardView
+            .inflate(R.layout.stats_entry, parent, false) as CardView
 
         return StatsViewHolder(entryView)
     }
@@ -76,8 +76,8 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
         viewHolder.secondDivider.setBackgroundColor(textColor)
         ImageViewCompat.setImageTintList(viewHolder.expand, ColorStateList.valueOf(textColor))
         ImageViewCompat.setImageTintList(
-                viewHolder.openInBrowser,
-                ColorStateList.valueOf(textColor)
+            viewHolder.openInBrowser,
+            ColorStateList.valueOf(textColor)
         )
 
         viewHolder.location.text = coronaTicker.location
@@ -97,8 +97,8 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
             viewHolder.full = !viewHolder.full
             if (viewHolder.full) {
                 TransitionManager.beginDelayedTransition(
-                        viewHolder.root,
-                        ChangeBounds()
+                    viewHolder.root,
+                    ChangeBounds()
                 )
 
                 viewHolder.secondDivider.visibility = View.VISIBLE
@@ -109,8 +109,8 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
                 transition.duration = 80
 
                 TransitionManager.beginDelayedTransition(
-                        viewHolder.root,
-                        transition
+                    viewHolder.root,
+                    transition
                 )
 
                 viewHolder.secondDivider.visibility = View.GONE
@@ -172,7 +172,7 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
         val animator = ObjectAnimator.ofFloat(itemView, "alpha", 0f, 0.5f, 1.0f)
         ObjectAnimator.ofFloat(itemView, "alpha", 0f).start()
         animator.startDelay =
-                (if (isNotFirstItem) FADE_IN_DURATION / 2 else i * FADE_IN_DURATION / 3).toLong()
+            (if (isNotFirstItem) FADE_IN_DURATION / 2 else i * FADE_IN_DURATION / 3).toLong()
         animator.duration = FADE_IN_DURATION.toLong()
         animatorSet.play(animator)
         animator.start()
@@ -192,9 +192,9 @@ class StatsAdapter(private val activity: MainActivity, data: List<LiveTicker>) :
 
     companion object {
         fun getColorWithBestContrast(
-                bgColor: Int,
-                lightColor: Int = Color.WHITE,
-                darkColor: Int = Color.BLACK
+            bgColor: Int,
+            lightColor: Int = Color.WHITE,
+            darkColor: Int = Color.BLACK
         ): Int {
             var color = String.format("#%06X", 0xFFFFFF and bgColor)
             color = color.substring(1, 7)

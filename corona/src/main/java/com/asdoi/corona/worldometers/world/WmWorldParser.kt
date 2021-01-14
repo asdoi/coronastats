@@ -13,7 +13,7 @@ import java.util.*
 
 object WmWorldParser : LiveTickerParser() {
     private const val DOCUMENT_URL =
-            "https://disease.sh/v3/covid-19/all?yesterday=false&twoDaysAgo=false"
+        "https://disease.sh/v3/covid-19/all?yesterday=false&twoDaysAgo=false"
     const val location = "World"
 
     private fun parseLiveTickers(document: Document): LiveTicker {
@@ -42,46 +42,46 @@ object WmWorldParser : LiveTickerParser() {
 
             val lastUpdateMillis = json.getString("updated")
             val lastUpdate: Calendar =
-                    try {
-                        val calendar = Calendar.getInstance()
-                        calendar.timeInMillis = lastUpdateMillis.toLong()
-                        calendar
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        Calendar.getInstance()
-                    }
+                try {
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = lastUpdateMillis.toLong()
+                    calendar
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Calendar.getInstance()
+                }
 
             return WmWorldTicker(
-                    location,
-                    lastUpdate,
-                    cases,
-                    casesToday,
-                    casesPerMillion,
-                    casesPerPeople,
-                    active,
-                    activePerOneMillion,
-                    critical,
-                    criticalPerOneMillion,
-                    recovered,
-                    recoveredToday,
-                    recoveredPerOneMillion,
-                    deaths,
-                    deathsToday,
-                    deathsPerOneMillion,
-                    deathsPerPeople,
-                    tests,
-                    testsPerOneMillion,
-                    testsPerPeople,
-                    affectedCountries
+                location,
+                lastUpdate,
+                cases,
+                casesToday,
+                casesPerMillion,
+                casesPerPeople,
+                active,
+                activePerOneMillion,
+                critical,
+                criticalPerOneMillion,
+                recovered,
+                recoveredToday,
+                recoveredPerOneMillion,
+                deaths,
+                deathsToday,
+                deathsPerOneMillion,
+                deathsPerPeople,
+                tests,
+                testsPerOneMillion,
+                testsPerPeople,
+                affectedCountries
             )
 
         } catch (e: Exception) {
             e.printStackTrace()
             return ParseError(
-                    location,
-                    WmWorldTicker.DATA_SOURCE,
-                    WmWorldTicker.VISIBLE_DATA_SOURCE,
-                    e
+                location,
+                WmWorldTicker.DATA_SOURCE,
+                WmWorldTicker.VISIBLE_DATA_SOURCE,
+                e
             )
         }
     }
@@ -91,15 +91,15 @@ object WmWorldParser : LiveTickerParser() {
     }
 
     fun parseNoErrors(document: Document) =
-            GovDEParser.parse(document).filter { !it.isError() }
+        GovDEParser.parse(document).filter { !it.isError() }
 
     fun parseNoInternalErrors(document: Document) =
-            GovDEParser.parse(document).filter {
-                if (it.isError()) {
-                    !(it as ParseError).isInternalError()
-                } else
-                    true
-            }
+        GovDEParser.parse(document).filter {
+            if (it.isError()) {
+                !(it as ParseError).isInternalError()
+            } else
+                true
+        }
 
     @Throws(IOException::class)
     fun downloadDocument(): Document {

@@ -9,104 +9,104 @@ import java.util.*
 import kotlin.math.roundToInt
 
 class LGLTicker(
-        location: String,
-        lastUpdate: Calendar,
-        cases: Int,
-        val casesDifferenceYesterdayToday: Int,
-        val casesPerOneHundredThousands: Double,
-        val casesInTheLastSevenDays: Int,
-        val sevenDayIncidencePerOneHundredThousands: Double,
-        deaths: Int,
-        val deathsDifferenceYesterdayToday: Int
+    location: String,
+    lastUpdate: Calendar,
+    cases: Int,
+    val casesDifferenceYesterdayToday: Int,
+    val casesPerOneHundredThousands: Double,
+    val casesInTheLastSevenDays: Int,
+    val sevenDayIncidencePerOneHundredThousands: Double,
+    deaths: Int,
+    val deathsDifferenceYesterdayToday: Int
 ) : LiveTicker(
-        Priority.COUNTY,
-        location,
-        lastUpdate,
-        DATA_SOURCE,
-        VISIBLE_DATA_SOURCE,
-        cases,
-        deaths,
-        calculateLightColor(sevenDayIncidencePerOneHundredThousands.roundToInt())
+    Priority.COUNTY,
+    location,
+    lastUpdate,
+    DATA_SOURCE,
+    VISIBLE_DATA_SOURCE,
+    cases,
+    deaths,
+    calculateLightColor(sevenDayIncidencePerOneHundredThousands.roundToInt())
 ) {
 
 
     override fun summary(context: Context): String {
         val infectionsYesterdayToday =
-                (if (casesDifferenceYesterdayToday > 0) "+" else "") + casesDifferenceYesterdayToday
+            (if (casesDifferenceYesterdayToday > 0) "+" else "") + casesDifferenceYesterdayToday
 
         return StringBuilder()
-                .append(
-                        context.getString(
-                                R.string.change_from_previous_day,
-                                infectionsYesterdayToday
-                        )
+            .append(
+                context.getString(
+                    R.string.change_from_previous_day,
+                    infectionsYesterdayToday
                 )
-                .append("\n")
-                .append(
-                        context.getString(
-                                R.string.seven_day_incidence_per_100_000,
-                                sevenDayIncidencePerOneHundredThousands.roundToInt().toFloat()
-                        )
-                                .removeSuffix(".0").removeSuffix(",0")
+            )
+            .append("\n")
+            .append(
+                context.getString(
+                    R.string.seven_day_incidence_per_100_000,
+                    sevenDayIncidencePerOneHundredThousands.roundToInt().toFloat()
                 )
-                .toString()
+                    .removeSuffix(".0").removeSuffix(",0")
+            )
+            .toString()
     }
 
     override fun details(context: Context): String {
         val infectionsYesterdayToday =
-                (if (casesDifferenceYesterdayToday > 0) "+" else "") + casesDifferenceYesterdayToday
+            (if (casesDifferenceYesterdayToday > 0) "+" else "") + casesDifferenceYesterdayToday
 
         val deathsYesterdayToday =
-                (if (deathsDifferenceYesterdayToday > 0) "+" else "") + deathsDifferenceYesterdayToday
+            (if (deathsDifferenceYesterdayToday > 0) "+" else "") + deathsDifferenceYesterdayToday
 
         return StringBuilder()
-                .append(
-                        context.getString(
-                                R.string.total_infections,
-                                cases
-                        )
-                ).append("\n")
-                .append("\t\t")
-                .append(
-                        context.getString(
-                                R.string.change_from_previous_day,
-                                infectionsYesterdayToday
-                        )
+            .append(
+                context.getString(
+                    R.string.total_infections,
+                    cases
                 )
-                .append("\n")
-                .append(
-                        context.getString(
-                                R.string.total_infections_per_100_000,
-                                casesPerOneHundredThousands
-                        )
-                ).append("\n")
-                .append(
-                        context.getString(
-                                R.string.infections_in_the_last_seven_days,
-                                casesInTheLastSevenDays
-                        )
-                ).append("\n")
-                .append(
-                        context.getString(
-                                R.string.seven_day_incidence_per_100_000,
-                                sevenDayIncidencePerOneHundredThousands
-                        )
-                ).append("\n")
-                .append(context.getString(R.string.deaths, deaths))
-                .append("\n")
-                .append("\t\t")
-                .append(
-                        context.getString(
-                                R.string.change_from_previous_day,
-                                deathsYesterdayToday
-                        )
-                ).toString()
+            ).append("\n")
+            .append("\t\t")
+            .append(
+                context.getString(
+                    R.string.change_from_previous_day,
+                    infectionsYesterdayToday
+                )
+            )
+            .append("\n")
+            .append(
+                context.getString(
+                    R.string.total_infections_per_100_000,
+                    casesPerOneHundredThousands
+                )
+            ).append("\n")
+            .append(
+                context.getString(
+                    R.string.infections_in_the_last_seven_days,
+                    casesInTheLastSevenDays
+                )
+            ).append("\n")
+            .append(
+                context.getString(
+                    R.string.seven_day_incidence_per_100_000,
+                    sevenDayIncidencePerOneHundredThousands
+                )
+            ).append("\n")
+            .append(context.getString(R.string.deaths, deaths))
+            .append("\n")
+            .append("\t\t")
+            .append(
+                context.getString(
+                    R.string.change_from_previous_day,
+                    deathsYesterdayToday
+                )
+            ).toString()
     }
 
     companion object {
         const val DATA_SOURCE = "www.lgl.bayern.de"
         const val VISIBLE_DATA_SOURCE =
-                "https://www.lgl.bayern.de/gesundheit/infektionsschutz/infektionskrankheiten_a_z/coronavirus/karte_coronavirus/index.htm"
+            "https://www.lgl.bayern.de/gesundheit/infektionsschutz/infektionskrankheiten_a_z/coronavirus/karte_coronavirus/index.htm"
 
         private fun calculateLightColor(value: Int) = when (value) {
             in 0 until 25 -> LightColor.GREEN
