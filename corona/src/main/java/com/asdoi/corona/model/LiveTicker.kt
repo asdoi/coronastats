@@ -45,6 +45,7 @@ abstract class LiveTicker(
         val colorResource: Int =
             when (lightColor) {
                 LightColor.GREEN -> R.color.light_green
+                LightColor.ORANGE -> R.color.light_orange
                 LightColor.YELLOW -> R.color.light_yellow
                 LightColor.RED -> R.color.light_red
                 LightColor.DEEP_RED -> R.color.light_deep_red

@@ -91,8 +91,8 @@ class RKICountyTicker(
             "https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4"
 
         private fun calculateLightColor(value: Int) = when (value) {
-            in 0 until 25 -> LightColor.GREEN
-            in 25 until 50 -> LightColor.YELLOW
+            in 0 until 35 -> LightColor.GREEN
+            in 35 until 50 -> LightColor.YELLOW
             in 50 until 100 -> LightColor.RED
             in 100 until 200 -> LightColor.DEEP_RED
             else -> LightColor.PURPLE
