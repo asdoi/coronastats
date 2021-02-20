@@ -110,8 +110,8 @@ class LGLTicker(
 
         private fun calculateLightColor(value: Int) = when (value) {
             in 0 until 25 -> LightColor.GREEN
-            in 25 until 35 -> LightColor.ORANGE
-            in 35 until 50 -> LightColor.YELLOW
+            in 25 until 35 -> LightColor.YELLOW
+            in 35 until 50 -> LightColor.ORANGE
             in 50 until 100 -> LightColor.RED
             in 100 until 200 -> LightColor.DEEP_RED
             else -> LightColor.PURPLE
