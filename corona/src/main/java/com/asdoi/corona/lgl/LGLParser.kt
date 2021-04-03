@@ -46,7 +46,7 @@ object LGLParser : LiveTickerParser() {
             val table = doc.select("table#tableLandkreise")
             val rows = table.select("tbody tr")
 
-            val headline = rows[0].select("th").eachText()
+            val headline = table.select("th").eachText()
             val cityIndex: Int = headline.indexOf("Landkreis/Stadt")
             val infectionsIndex: Int = headline.indexOf("Anzahl der Fälle")
             val infectionsYesterdayTodayIndex: Int = headline.indexOf("Fälle Änderung zum Vortag")
