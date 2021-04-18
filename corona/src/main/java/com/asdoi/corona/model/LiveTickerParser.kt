@@ -21,4 +21,8 @@ abstract class LiveTickerParser {
                 true
         }
     }
+
+    open fun getSuggestions(): List<String> {
+        return listOf()
+    }
 }

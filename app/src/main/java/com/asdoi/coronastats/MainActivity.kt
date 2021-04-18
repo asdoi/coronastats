@@ -1,17 +1,19 @@
 package com.asdoi.coronastats
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.input
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.asdoi.corona.ParserDE
 import com.asdoi.corona.worldometers.world.WmWorldParser
 import com.asdoi.coronastats.databinding.ActivityMainBinding
@@ -78,12 +80,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addCityDialog() {
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_dropdown_item_1line, ParserDE.getSuggestions()
+        )
+        val textView = AutoCompleteTextView(this)
+        textView.setAdapter(adapter)
+
         MaterialDialog(this).show {
-            input(
-                hintRes = R.string.munich,
-                inputType = InputType.TYPE_CLASS_TEXT
-            ) { _, text ->
-                val city = text.toString()
+            customView(view = textView, horizontalPadding = true)
+            title(R.string.add_city)
+            positiveButton(R.string.add) {
+                val view = it.getCustomView() as AutoCompleteTextView
+                val city = view.text.toString()
 
                 Thread {
                     try {
@@ -109,8 +118,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.start()
             }
-            positiveButton(R.string.add)
-            title(R.string.add_city)
         }
     }
 

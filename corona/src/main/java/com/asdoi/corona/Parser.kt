@@ -273,4 +273,18 @@ object Parser : LiveTickerParser() {
             } else
                 true
         }
+
+    override fun getSuggestions(): List<String> {
+        val list = mutableListOf<String>()
+        list.addAll(LGLParser.getSuggestions())
+        list.addAll(RKICountiesParser.getSuggestions())
+        list.addAll(RKIStatesParser.getSuggestions())
+        list.addAll(RKIGermanyParser.getSuggestions())
+        list.addAll(JHUParser.getSuggestions())
+        list.addAll(WmStatesParser.getSuggestions())
+        list.addAll(WmCountriesParser.getSuggestions())
+        list.addAll(WmContinentsParser.getSuggestions())
+        list.addAll(WmWorldParser.getSuggestions())
+        return list.distinct()
+    }
 }

@@ -116,4 +116,8 @@ object WmWorldParser : LiveTickerParser() {
         else
             listOf()
     }
+
+    override fun getSuggestions(): List<String> {
+        return listOf(location)
+    }
 }

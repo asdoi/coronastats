@@ -127,4 +127,15 @@ object WmContinentsParser : LiveTickerParser() {
     override fun parse(vararg locations: String): List<LiveTicker> {
         return parse(*downloadDocuments(*locations).toTypedArray())
     }
+
+    override fun getSuggestions(): List<String> {
+        return listOf(
+            "Europe",
+            "North America",
+            "South America",
+            "Asia",
+            "Africa",
+            "Australia/Oceania"
+        )
+    }
 }

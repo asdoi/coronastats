@@ -162,4 +162,25 @@ object RKIStatesParser : LiveTickerParser() {
     override fun parse(vararg locations: String): List<LiveTicker> {
         return parse(downloadTableDocument(), *downloadDocuments(*locations).toTypedArray())
     }
+
+    override fun getSuggestions(): List<String> {
+        return listOf(
+            "Schleswig-Holstein",
+            "Hamburg",
+            "Niedersachsen",
+            "Bremen",
+            "Nordrhein-Westfalen",
+            "Hessen",
+            "Rheinland-Pfalz",
+            "Baden-Württemberg",
+            "Bayern",
+            "Saarland",
+            "Berlin",
+            "Brandenburg",
+            "Mecklenburg-Vorpommern",
+            "Sachsen",
+            "Sachsen-Anhalt",
+            "Thüringen"
+        )
+    }
 }

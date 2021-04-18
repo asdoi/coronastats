@@ -6,6 +6,7 @@ import com.asdoi.corona.model.LiveTickerParser
 import com.asdoi.corona.rki.counties.RKICountiesParser
 import com.asdoi.corona.rki.germany.RKIGermanyParser
 import com.asdoi.corona.rki.states.RKIStatesParser
+import com.asdoi.corona.worldometers.continents.WmContinentsParser
 import com.asdoi.corona.worldometers.world.WmWorldParser
 import java.io.IOException
 
@@ -63,6 +64,17 @@ object ParserDE : LiveTickerParser() {
             }
         }
 
+        var tickersContinentsWm: List<LiveTicker> = listOf()
+        var errorContinentsWm = false
+        val threadContinentsWm = Thread {
+            try {
+                tickersContinentsWm = WmContinentsParser.parse(*locations)
+            } catch (e: Exception) {
+                errorContinentsWm = true
+                e.printStackTrace()
+            }
+        }
+
         var worldTicker: List<LiveTicker> = listOf()
         var errorWorldTicker = false
         val threadWorldWm = Thread {
@@ -82,6 +94,7 @@ object ParserDE : LiveTickerParser() {
         threadDistrictsRKI.start()
         threadCountiesRKI.start()
         threadGermanyRKI.start()
+        threadContinentsWm.start()
         threadWorldWm.start()
 
         try {
@@ -89,6 +102,7 @@ object ParserDE : LiveTickerParser() {
             threadDistrictsRKI.join()
             threadCountiesRKI.join()
             threadGermanyRKI.join()
+            threadContinentsWm.join()
             threadWorldWm.join()
         } catch (ignore: Exception) {
         }
@@ -98,6 +112,7 @@ object ParserDE : LiveTickerParser() {
         tickers.addAll(tickersDistrictsRKI)
         tickers.addAll(tickersCountiesRKI)
         tickers.addAll(tickerGermanyRKI)
+        tickers.addAll(tickersContinentsWm)
         tickers.addAll(worldTicker)
 
         if (errorLGL &&
@@ -140,4 +155,15 @@ object ParserDE : LiveTickerParser() {
             } else
                 true
         }
+
+    override fun getSuggestions(): List<String> {
+        val list = mutableListOf<String>()
+        list.addAll(LGLParser.getSuggestions())
+        list.addAll(RKICountiesParser.getSuggestions())
+        list.addAll(RKIStatesParser.getSuggestions())
+        list.addAll(RKIGermanyParser.getSuggestions())
+        list.addAll(WmContinentsParser.getSuggestions())
+        list.addAll(WmWorldParser.getSuggestions())
+        return list.distinct()
+    }
 }
