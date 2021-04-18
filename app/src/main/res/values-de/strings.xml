@@ -5,7 +5,7 @@
     <string name="add_city">Ort hinzufügen</string>
     <string name="delete_city">Ort löschen</string>
     <string name="please_add_a_city">Bitte einen Ort hinzufügen</string>
-    <string name="open_source_libraries">Open-Source Bibliotheken</string>
+    <string name="about">Über</string>
     <string name="add">Hinzufügen</string>
     <string name="city_not_found">Ort nicht gefunden</string>
     <string name="show_worldwide_statistics">Weltweite Daten anzeigen</string>
@@ -13,4 +13,7 @@
     <string name="expand">Ausführlich</string>
     <string name="include_all_countries">Alle Länder anzeigen</string>
     <string name="exclude_all_countries">Nur Deutschland anzeigen</string>
+    <string name="source_code">Quelltext</string>
+    <string name="license">Lizenz</string>
+    <string name="author">Autor</string>
 </resources>

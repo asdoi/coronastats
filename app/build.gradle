@@ -53,7 +53,7 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
-    implementation "com.mikepenz:aboutlibraries:${latestAboutLibsRelease}"
+    implementation "com.mikepenz:aboutlibraries:8.8.5"
     implementation 'com.github.Pradyuman7:ChocoBar:V1.4'
     implementation project(path: ':corona')
 

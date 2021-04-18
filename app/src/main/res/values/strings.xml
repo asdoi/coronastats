@@ -6,7 +6,7 @@
     <string name="add_city">Add city</string>
     <string name="delete_city">Delete city</string>
     <string name="please_add_a_city">Please add a city</string>
-    <string name="open_source_libraries">Open source libraries</string>
+    <string name="about">About</string>
     <string name="add">Add</string>
     <string name="munich" translatable="false">München</string>
     <string name="city_not_found">City not found</string>
@@ -15,4 +15,7 @@
     <string name="include_all_countries">Include all countries</string>
     <string name="exclude_all_countries">Show only Germany</string>
     <string name="expand">Expand</string>
+    <string name="source_code">Source Code</string>
+    <string name="license">License</string>
+    <string name="author">Author</string>
 </resources>

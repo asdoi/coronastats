@@ -228,11 +228,17 @@ class MainActivity : AppCompatActivity() {
             R.id.action_add_city -> addCityDialog()
             R.id.action_info -> {
                 LibsBuilder()
-                    .withActivityTitle(getString(R.string.open_source_libraries))
+                    .withActivityTitle(getString(R.string.about))
                     .withAboutIconShown(true)
                     .withFields(R.string::class.java.fields)
                     .withLicenseShown(true)
                     .withAboutAppName(getString(R.string.app_name))
+                    .withAboutSpecial1(getString(R.string.source_code))
+                    .withAboutSpecial1Description("<h1>" + getString(R.string.source_code) + ":</h1><br><a href=\"https://gitlab.com/asdoi/coronastats\">Gitlab.com/asdoi/coronastats</a>")
+                    .withAboutSpecial2(getString(R.string.author))
+                    .withAboutSpecial2Description("<h1>" + getString(R.string.author) + ":</h1><br><a href=\"https://gitlab.com/asdoi\">Asdoi</a>")
+                    .withAboutSpecial3(getString(R.string.license))
+                    .withAboutSpecial3Description("<h1>MIT License</h1><br><a href=\"https://gitlab.com/asdoi/coronastats/-/blob/master/LICENSE\">GitLab</a>")
                     .start(this)
             }
             R.id.action_switch_world -> {
