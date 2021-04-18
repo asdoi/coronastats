@@ -64,18 +64,7 @@ object ParserDE : LiveTickerParser() {
             }
         }
 
-        var tickersContinentsWm: List<LiveTicker> = listOf()
-        var errorContinentsWm = false
-        val threadContinentsWm = Thread {
-            try {
-                tickersContinentsWm = WmContinentsParser.parse(*locations)
-            } catch (e: Exception) {
-                errorContinentsWm = true
-                e.printStackTrace()
-            }
-        }
-
-        var worldTicker: List<LiveTicker> = listOf()
+/*        var worldTicker: List<LiveTicker> = listOf()
         var errorWorldTicker = false
         val threadWorldWm = Thread {
             try {
@@ -87,23 +76,21 @@ object ParserDE : LiveTickerParser() {
                 errorWorldTicker = true
                 e.printStackTrace()
             }
-        }
+        }*/
 
 
         threadLGL.start()
         threadDistrictsRKI.start()
         threadCountiesRKI.start()
         threadGermanyRKI.start()
-        threadContinentsWm.start()
-        threadWorldWm.start()
+//        threadWorldWm.start()
 
         try {
             threadLGL.join()
             threadDistrictsRKI.join()
             threadCountiesRKI.join()
             threadGermanyRKI.join()
-            threadContinentsWm.join()
-            threadWorldWm.join()
+//            threadWorldWm.join()
         } catch (ignore: Exception) {
         }
 
@@ -112,14 +99,13 @@ object ParserDE : LiveTickerParser() {
         tickers.addAll(tickersDistrictsRKI)
         tickers.addAll(tickersCountiesRKI)
         tickers.addAll(tickerGermanyRKI)
-        tickers.addAll(tickersContinentsWm)
-        tickers.addAll(worldTicker)
+//        tickers.addAll(worldTicker)
 
         if (errorLGL &&
             errorDistrictsRKI &&
             errorCountiesRKI &&
-            errorGermanyRKI &&
-            errorWorldTicker
+            errorGermanyRKI /*&&
+            errorWorldTicker*/
         ) {
             throw IOException()
         }

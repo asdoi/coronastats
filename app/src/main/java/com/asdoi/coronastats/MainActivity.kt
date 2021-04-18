@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
+import com.asdoi.corona.Parser
 import com.asdoi.corona.ParserDE
 import com.asdoi.corona.worldometers.world.WmWorldParser
 import com.asdoi.coronastats.databinding.ActivityMainBinding
@@ -22,6 +23,7 @@ import com.pd.chocobar.ChocoBar
 
 
 const val PREF_CITIES = "prefCities"
+const val PREF_COUNTRIES = "prefCountries"
 const val DIVIDER = "%"
 
 class MainActivity : AppCompatActivity() {
@@ -58,7 +60,12 @@ class MainActivity : AppCompatActivity() {
         Thread {
             try {
                 val cities = getCities()
-                val parsedTickers = ParserDE.parseNoInternalErrors(*cities.toTypedArray())
+                val parsedTickers =
+                    if (isAllCountries())
+                        Parser.parseNoInternalErrors(*cities.toTypedArray())
+                    else
+                        ParserDE.parseNoInternalErrors(*cities.toTypedArray())
+
 
                 runOnUiThread {
                     viewAdapter.data = parsedTickers
@@ -80,9 +87,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addCityDialog() {
+        val suggestions =
+            if (isAllCountries())
+                Parser.getSuggestions()
+            else
+                ParserDE.getSuggestions()
+
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             this,
-            android.R.layout.simple_dropdown_item_1line, ParserDE.getSuggestions()
+            android.R.layout.simple_dropdown_item_1line, suggestions
         )
         val textView = AutoCompleteTextView(this)
         textView.setAdapter(adapter)
@@ -96,7 +109,12 @@ class MainActivity : AppCompatActivity() {
 
                 Thread {
                     try {
-                        val cities = ParserDE.parseNoErrors(city)
+                        val cities =
+                            if (isAllCountries())
+                                Parser.parseNoErrors(city)
+                            else
+                                ParserDE.parseNoErrors(city)
+
                         if (cities.isNotEmpty()) {
                             saveCity(cities[0].location)
                             runOnUiThread {
@@ -171,6 +189,16 @@ class MainActivity : AppCompatActivity() {
         removeCity(WmWorldParser.location.toUpperCase())
     }
 
+    fun isAllCountries(): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREF_COUNTRIES, false)
+    }
+
+    fun changeAllCountries() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+            .putBoolean(PREF_COUNTRIES, !isAllCountries())
+            .apply()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -181,6 +209,15 @@ class MainActivity : AppCompatActivity() {
         } else {
             worldItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_no_earth)
             worldItem.title = getString(R.string.show_worldwide_statistics)
+        }
+
+        val countriesItem = menu.findItem(R.id.action_include_countries)!!
+        if (isAllCountries()) {
+            countriesItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_earth)
+            countriesItem.title = getString(R.string.exclude_all_countries)
+        } else {
+            countriesItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_no_earth)
+            countriesItem.title = getString(R.string.include_all_countries)
         }
         return true
     }
@@ -203,6 +240,11 @@ class MainActivity : AppCompatActivity() {
                     removeWorldWide()
                 else
                     addWorldWide()
+                refreshRecyclerView()
+                invalidateOptionsMenu()
+            }
+            R.id.action_include_countries -> {
+                changeAllCountries()
                 refreshRecyclerView()
                 invalidateOptionsMenu()
             }

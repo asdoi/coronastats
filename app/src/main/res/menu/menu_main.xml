@@ -15,9 +15,16 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:visible="false"
         android:id="@+id/action_switch_world"
         android:icon="@drawable/ic_no_earth"
-        android:title="@string/show_worldwide_statistics"
+        android:title="@string/include_all_countries"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_include_countries"
+        android:icon="@drawable/ic_no_earth"
+        android:title="@string/include_all_countries"
         app:showAsAction="ifRoom" />
 
     <item

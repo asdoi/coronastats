@@ -12,5 +12,7 @@
     <string name="city_not_found">City not found</string>
     <string name="show_worldwide_statistics">Show worldwide statistics</string>
     <string name="hide_worldwide_statistics">Hide worldwide statistics</string>
+    <string name="include_all_countries">Include all countries</string>
+    <string name="exclude_all_countries">Show only Germany</string>
     <string name="expand">Expand</string>
 </resources>
