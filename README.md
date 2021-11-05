@@ -29,7 +29,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```
    dependencies {
-      implementation 'com.gitlab.asdoi:coronastats:v1.1'
+      implementation 'com.gitlab.asdoi:coronastats:v1.5'
    }
 ```
 
