@@ -15,7 +15,7 @@ object RKIStatesParser : LiveTickerParser() {
         "https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"
 
     private fun getAPIUrl(state: String): String {
-        return "https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=LAN_ew_GEN%20%3D%20%27${state}%27&outFields=Fallzahl,Aktualisierung,faelle_100000_EW,Death,cases7_bl_per_100k,LAN_ew_GEN&outSR=4326&f=json"
+        return "https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/Coronaf%C3%A4lle_in_den_Bundesl%C3%A4ndern/FeatureServer/0/query?where=LAN_ew_GEN%20%3D%20%27${state}%27&outFields=*&outSR=4326&f=json"
     }
 
     private fun parseLiveTickers(
@@ -143,7 +143,7 @@ object RKIStatesParser : LiveTickerParser() {
     fun downloadDocuments(vararg cities: String): List<Document> {
         val documents: MutableList<Document> = mutableListOf()
         for (city in cities) {
-            val document = Jsoup.connect(getAPIUrl(city)).get()
+            val document = Jsoup.connect(getAPIUrl(city)).ignoreContentType(true).get()
 
             if (document != null)
                 documents.add(document)

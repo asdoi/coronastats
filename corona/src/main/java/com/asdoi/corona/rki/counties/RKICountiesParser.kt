@@ -13,7 +13,7 @@ import java.util.*
 
 object RKICountiesParser : LiveTickerParser() {
     private fun getAPIUrl(city: String): String {
-        return "https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=GEN%20%3D%20%27$city%27&outFields=GEN,BEZ,death_rate,cases,deaths,cases_per_100k,cases_per_population,BL,county,last_update,cases7_per_100k,recovered,cases7_bl_per_100k&outSR=4326&f=json"
+        return "https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=GEN%20%3D%20%27$city%27&outFields=*&outSR=4326&f=json"
     }
 
     private fun parseLiveTickers(vararg documents: Document): List<LiveTicker> {
@@ -95,7 +95,7 @@ object RKICountiesParser : LiveTickerParser() {
     fun downloadDocuments(vararg cities: String): List<Document> {
         val documents: MutableList<Document> = mutableListOf()
         for (city in cities) {
-            val document = Jsoup.connect(getAPIUrl(city)).get()
+            val document = Jsoup.connect(getAPIUrl(city)).ignoreContentType(true).get();
 
             if (document != null)
                 documents.add(document)
