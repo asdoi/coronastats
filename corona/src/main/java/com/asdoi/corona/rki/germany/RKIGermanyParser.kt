@@ -25,9 +25,9 @@ object RKIGermanyParser : LiveTickerParser() {
                         document.select("#content #main .text p")[0].text()
                     dateText = dateText.removePrefix("Stand: ")
                     dateText =
-                        dateText.substring(0, dateText.indexOf("Uhr")).trim().replace(" ", "")
+                        dateText.substring(0, dateText.indexOf("Uhr")).trim()
 
-                    val dateFormat = SimpleDateFormat("dd.MM.yyy,HH:mm", Locale.GERMANY)
+                    val dateFormat = SimpleDateFormat("EEEEE dd.MM.yyy,HH:mm", Locale.GERMANY)
 
                     val calendar = Calendar.getInstance()
                     calendar.time = dateFormat.parse(dateText)!!
@@ -52,25 +52,26 @@ object RKIGermanyParser : LiveTickerParser() {
             for (row in rows) {
                 val columns = row.select("td").eachText()
                 if (columns[0].toUpperCase() == "Gesamt".toUpperCase()) {
-                    val cases = columns[casesIndex].replace(".", "").toInt()
+                    val cases = columns[casesIndex].replace(".", "").replace(",", ".").toInt()
 
                     val todayCasesString =
                         columns[todayCasesIndex].replace("+", "")
-                            .replace(".", "").trim()
+                            .replace(".", "").replace(",", ".").trim()
                     val todayCases =
                         if (todayCasesString == "-")
                             0
                         else todayCasesString.toInt()
 
                     val casesInTheLast7Days =
-                        columns[casesInTheLast7DaysIndex].replace(".", "")
+                        columns[casesInTheLast7DaysIndex].replace(".", "").replace(",", ".")
                             .trim().toInt()
 
                     val sevenDayIncidencePerOneHundredThousands =
-                        columns[sevenDayIncidenceHundredThousandIndex].replace(",", ".")
+                        columns[sevenDayIncidenceHundredThousandIndex].replace(".", "")
+                            .replace(",", ".")
                             .toDouble()
 
-                    val deaths = columns[deathsIndex].replace(".", "").toInt()
+                    val deaths = columns[deathsIndex].replace(".", "").replace(",", ".").toInt()
 
                     tickers.add(
                         RKIGermanyTicker(
