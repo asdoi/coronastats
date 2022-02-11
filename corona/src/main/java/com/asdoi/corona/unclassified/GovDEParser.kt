@@ -114,4 +114,25 @@ object GovDEParser : LiveTickerParser() {
     override fun parse(vararg locations: String): List<LiveTicker> {
         return parse(downloadDocument(), *locations)
     }
+
+    override fun getSuggestions(): List<String> {
+        return listOf(
+            "Schleswig-Holstein",
+            "Hamburg",
+            "Niedersachsen",
+            "Bremen",
+            "Nordrhein-Westfalen",
+            "Hessen",
+            "Rheinland-Pfalz",
+            "Baden-Württemberg",
+            "Bayern",
+            "Saarland",
+            "Berlin",
+            "Brandenburg",
+            "Mecklenburg-Vorpommern",
+            "Sachsen",
+            "Sachsen-Anhalt",
+            "Thüringen"
+        )
+    }
 }
