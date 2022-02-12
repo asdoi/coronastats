@@ -68,7 +68,7 @@ object WmCountriesParser : LiveTickerParser() {
                     val recoveredPerMillion = jsonObject.getDouble("recoveredPerOneMillion")
                     val criticalPerMillion = jsonObject.getDouble("criticalPerOneMillion")
 
-                    val lastUpdateMillis = jsonObject.getString("updated")
+                    val lastUpdateMillis = jsonObject.get("updated").toString()
                     val lastUpdate: Calendar =
                         try {
                             val calendar = Calendar.getInstance()

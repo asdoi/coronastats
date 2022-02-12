@@ -40,7 +40,7 @@ object GovDEParser : LiveTickerParser() {
                             jsonObject.getDouble("sevenDayCasesPerHundredThousand")
                         val deaths = jsonObject.getInt("deaths")
 
-                        val lastUpdateMillis = jsonObject.getString("updated")
+                        val lastUpdateMillis = jsonObject.get("updated").toString()
                         val lastUpdate: Calendar =
                             try {
                                 val calendar = Calendar.getInstance()

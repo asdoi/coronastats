@@ -60,7 +60,7 @@ object WmStatesParser : LiveTickerParser() {
                     val tests = jsonObject.getInt("tests")
                     val testsPerMillion = jsonObject.getDouble("testsPerOneMillion")
 
-                    val lastUpdateMillis = jsonObject.getString("updated")
+                    val lastUpdateMillis = jsonObject.get("updated").toString()
                     val lastUpdate: Calendar =
                         try {
                             val calendar = Calendar.getInstance()

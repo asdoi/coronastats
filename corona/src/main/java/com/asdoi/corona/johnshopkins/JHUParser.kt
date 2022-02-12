@@ -29,14 +29,16 @@ object JHUParser : LiveTickerParser() {
             for (jsonIndex in 0 until json.length()) {
                 val jsonObject: JSONObject = json.getJSONObject(jsonIndex)
                 val country = jsonObject.getString("country")
-                val province = jsonObject.getString("province")
+                val province = jsonObject.get("province").toString()
                 val location = if (province == "null") country else province
                 if (locationsList.contains(location.toUpperCase())) {
                     try {
                         val stats = jsonObject.getJSONObject("stats")
                         val confirmed = stats.getInt("confirmed")
                         val deaths = stats.getInt("deaths")
-                        val recovered = stats.getInt("recovered")
+                        val recoveredString = stats.get("recovered").toString()
+                        val recovered =
+                            if (recoveredString == "null") -1 else recoveredString.toInt()
                         val updatedAt = jsonObject.getString("updatedAt")
                         val lastUpdate: Calendar =
                             try {

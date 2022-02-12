@@ -38,7 +38,7 @@ object RKIStatesParser : LiveTickerParser() {
                     val sevenDayIncidencePerOneHundredThousands =
                         attributes.getDouble("cases7_bl_per_100k")
 
-                    val lastUpdateMillis = attributes.getString("Aktualisierung")
+                    val lastUpdateMillis = attributes.get("Aktualisierung").toString()
                     val lastUpdate: Calendar =
                         try {
                             val calendar = Calendar.getInstance()

@@ -14,7 +14,7 @@ class UnitTest {
 
     @Test
     fun testRKI() {
-        val card = JHUParser.parse(JHUParser.getSuggestions()[0])
+        val card = JHUParser.parse(JHUParser.getSuggestions()[10])
         val card2 = LGLParser.parse(LGLParser.getSuggestions()[0])
         val card3 = RKICountiesParser.parse(RKICountiesParser.getSuggestions()[0]) //TODO
         val card4 = RKIGermanyParser.parse(RKIGermanyParser.getSuggestions()[0])

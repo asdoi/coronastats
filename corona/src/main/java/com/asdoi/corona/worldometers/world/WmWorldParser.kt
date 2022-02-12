@@ -40,7 +40,7 @@ object WmWorldParser : LiveTickerParser() {
             val testsPerPeople = json.getInt("oneTestPerPeople")
             val affectedCountries = json.getInt("affectedCountries")
 
-            val lastUpdateMillis = json.getString("updated")
+            val lastUpdateMillis = json.get("updated").toString()
             val lastUpdate: Calendar =
                 try {
                     val calendar = Calendar.getInstance()
