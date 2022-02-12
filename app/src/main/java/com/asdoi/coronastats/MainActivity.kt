@@ -20,6 +20,7 @@ import com.asdoi.corona.worldometers.world.WmWorldParser
 import com.asdoi.coronastats.databinding.ActivityMainBinding
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.pd.chocobar.ChocoBar
+import java.util.*
 
 
 const val PREF_CITIES = "prefCities"
@@ -142,7 +143,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveCity(city: String) {
         PreferenceManager.getDefaultSharedPreferences(this).edit()
-            .putString(PREF_CITIES, "${this.getCitiesString()}$DIVIDER${city.toUpperCase()}")
+            .putString(
+                PREF_CITIES,
+                "${this.getCitiesString()}$DIVIDER${city.uppercase(Locale.getDefault())}"
+            )
             .apply()
         invalidateOptionsMenu()
     }
@@ -159,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 
     fun removeCity(name: String) {
         val cities = getCities()
-        cities.remove(name.toUpperCase())
+        cities.remove(name.uppercase(Locale.getDefault()))
         val saveString = StringBuilder()
         if (cities.size == 1) {
             saveString.append(cities[0])
@@ -178,15 +182,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun isWorldWide(): Boolean {
-        return getCities().contains(WmWorldParser.location.toUpperCase())
+        return getCities().contains(WmWorldParser.location.uppercase(Locale.getDefault()))
     }
 
     fun addWorldWide() {
-        saveCity(WmWorldParser.location.toUpperCase())
+        saveCity(WmWorldParser.location.uppercase(Locale.getDefault()))
     }
 
     fun removeWorldWide() {
-        removeCity(WmWorldParser.location.toUpperCase())
+        removeCity(WmWorldParser.location.uppercase(Locale.getDefault()))
     }
 
     fun isAllCountries(): Boolean {

@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoronaStats"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
