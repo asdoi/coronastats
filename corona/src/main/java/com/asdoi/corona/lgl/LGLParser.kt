@@ -47,7 +47,7 @@ object LGLParser : LiveTickerParser() {
             val rows = table.select("tbody tr")
 
             val headline = table.select("th").eachText()
-            val cityIndex: Int = headline.indexOf("Landkreis/Stadt")
+            val cityIndex: Int = headline.indexOf("Landkreis (LK)/Stadt")
             val infectionsIndex: Int = headline.indexOf("Anzahl der Fälle")
             val infectionsYesterdayTodayIndex: Int = headline.indexOf("Fälle Änderung zum Vortag")
             val infectionsPerOneHundredThousandsIndex: Int =
@@ -62,12 +62,18 @@ object LGLParser : LiveTickerParser() {
             for (line in 1 until rows.size - 1) {
                 val row = rows[line].select("td").eachText()
                 if (citiesList.contains(row[cityIndex].uppercase())
-                    || citiesList.contains(row[cityIndex].uppercase().removeSuffix(" STADT"))
+                    || citiesList.contains(row[cityIndex].uppercase().removeSuffix(" (STADT)"))
+                    || citiesList.contains(row[cityIndex].uppercase().removeSuffix(" (LK)"))
                 ) {
                     val location =
-                        if (citiesList.contains(row[cityIndex].uppercase().removeSuffix(" STADT"))
+                        if (citiesList.contains(row[cityIndex].uppercase().removeSuffix(" (STADT)"))
                         ) {
-                            row[cityIndex].removeSuffix(" Stadt")
+                            row[cityIndex].removeSuffix(" (Stadt)")
+                        } else if (citiesList.contains(
+                                row[cityIndex].uppercase().removeSuffix(" (LK)")
+                            )
+                        ) {
+                            row[cityIndex].removeSuffix(" (LK)")
                         } else {
                             row[cityIndex]
                         }

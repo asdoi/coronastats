@@ -63,9 +63,9 @@ class MainActivity : AppCompatActivity() {
                 val cities = getCities()
                 val parsedTickers =
                     if (isAllCountries())
-                        Parser.parseNoInternalErrors(*cities.toTypedArray())
+                        Parser.parse(*cities.toTypedArray())
                     else
-                        ParserDE.parseNoInternalErrors(*cities.toTypedArray())
+                        ParserDE.parse(*cities.toTypedArray())
 
 
                 runOnUiThread {
