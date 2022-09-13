@@ -18,7 +18,7 @@ object JHUParser : LiveTickerParser() {
     private fun parseLiveTickers(document: Document, vararg locations: String): List<LiveTicker> {
         val locationsList: MutableList<String> = mutableListOf()
         for (location in locations) {
-            locationsList.add(location.toUpperCase())
+            locationsList.add(location.uppercase())
         }
 
         val tickers: MutableList<LiveTicker> = mutableListOf()
@@ -31,7 +31,7 @@ object JHUParser : LiveTickerParser() {
                 val country = jsonObject.getString("country")
                 val province = jsonObject.get("province").toString()
                 val location = if (province == "null") country else province
-                if (locationsList.contains(location.toUpperCase())) {
+                if (locationsList.contains(location.uppercase())) {
                     try {
                         val stats = jsonObject.getJSONObject("stats")
                         val confirmed = stats.getInt("confirmed")

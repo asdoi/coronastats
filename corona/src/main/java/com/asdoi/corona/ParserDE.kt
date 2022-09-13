@@ -54,7 +54,7 @@ object ParserDE : LiveTickerParser() {
         var errorGermanyRKI = false
         val threadGermanyRKI = Thread {
             try {
-                if (locations.any { it.toUpperCase() == RKIGermanyParser.location.toUpperCase() })
+                if (locations.any { it.uppercase() == RKIGermanyParser.location.uppercase() })
                     tickerGermanyRKI = RKIGermanyParser.parse(*locations)
                 else
                     errorGermanyRKI = true
@@ -68,7 +68,7 @@ object ParserDE : LiveTickerParser() {
         var errorWorldTicker = false
         val threadWorldWm = Thread {
             try {
-                if (locations.any { it.toUpperCase() == WmWorldParser.location.toUpperCase() })
+                if (locations.any { it.uppercase() == WmWorldParser.location.uppercase() })
                     worldTicker = WmWorldParser.parse(*locations)
                 else
                     errorWorldTicker = true

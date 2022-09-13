@@ -111,7 +111,7 @@ object WmWorldParser : LiveTickerParser() {
 
     @Throws(IOException::class)
     override fun parse(vararg locations: String): List<LiveTicker> {
-        return if (locations.any { it.toUpperCase() == location.toUpperCase() })
+        return if (locations.any { it.uppercase() == location.uppercase() })
             parse(downloadDocument())
         else
             listOf()

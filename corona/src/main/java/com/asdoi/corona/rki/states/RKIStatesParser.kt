@@ -63,7 +63,7 @@ object RKIStatesParser : LiveTickerParser() {
                             var nextTicker = false
                             for (row in rows) {
                                 val columns = row.select("td")
-                                if (columns[0].text().toUpperCase() == location.toUpperCase()) {
+                                if (columns[0].text().uppercase() == location.uppercase()) {
                                     val todayCasesString =
                                         columns[todayCasesIndex].text().replace("+", "")
                                             .replace(".", "").trim()

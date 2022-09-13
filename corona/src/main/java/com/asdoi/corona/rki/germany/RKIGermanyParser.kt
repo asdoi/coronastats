@@ -51,7 +51,7 @@ object RKIGermanyParser : LiveTickerParser() {
 
             for (row in rows) {
                 val columns = row.select("td").eachText()
-                if (columns[0].toUpperCase() == "Gesamt".toUpperCase()) {
+                if (columns[0].uppercase() == "Gesamt".uppercase()) {
                     val cases = columns[casesIndex].replace(".", "").replace(",", ".").toInt()
 
                     val todayCasesString =
@@ -123,7 +123,7 @@ object RKIGermanyParser : LiveTickerParser() {
 
     @Throws(IOException::class)
     override fun parse(vararg locations: String): List<LiveTicker> {
-        return if (locations.any { it.toUpperCase() == location.toUpperCase() })
+        return if (locations.any { it.uppercase() == location.uppercase() })
             parse(downloadDocument())
         else
             listOf()

@@ -17,7 +17,7 @@ object GovDEParser : LiveTickerParser() {
     private fun parseLiveTickers(document: Document, vararg locations: String): List<LiveTicker> {
         val locationsList: MutableList<String> = mutableListOf()
         for (location in locations) {
-            locationsList.add(location.toUpperCase())
+            locationsList.add(location.uppercase())
         }
 
         val tickers: MutableList<LiveTicker> = mutableListOf()
@@ -30,7 +30,7 @@ object GovDEParser : LiveTickerParser() {
                 val province = jsonObject.getString("province")
                 val location = if (province == "Total") "Deutschland" else province
 
-                if (locationsList.contains(location.toUpperCase())) {
+                if (locationsList.contains(location.uppercase())) {
                     try {
                         val cases = jsonObject.getInt("cases")
                         val casePreviousDayChange = jsonObject.getInt("casePreviousDayChange")

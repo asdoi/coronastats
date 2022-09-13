@@ -17,7 +17,7 @@ object LGLParser : LiveTickerParser() {
     private fun parseLiveTickers(doc: Document, vararg cities: String): List<LiveTicker> {
         val citiesList: MutableList<String> = mutableListOf()
         for (city in cities) {
-            citiesList.add(city.toUpperCase())
+            citiesList.add(city.uppercase())
         }
 
         val tickers: MutableList<LiveTicker> = mutableListOf()
@@ -61,18 +61,18 @@ object LGLParser : LiveTickerParser() {
 
             for (line in 1 until rows.size - 1) {
                 val row = rows[line].select("td").eachText()
-                if (citiesList.contains(row[cityIndex].toUpperCase())
-                    || citiesList.contains(row[cityIndex].toUpperCase().removeSuffix(" STADT"))
+                if (citiesList.contains(row[cityIndex].uppercase())
+                    || citiesList.contains(row[cityIndex].uppercase().removeSuffix(" STADT"))
                 ) {
                     val location =
-                        if (citiesList.contains(row[cityIndex].toUpperCase().removeSuffix(" STADT"))
+                        if (citiesList.contains(row[cityIndex].uppercase().removeSuffix(" STADT"))
                         ) {
                             row[cityIndex].removeSuffix(" Stadt")
                         } else {
                             row[cityIndex]
                         }
 
-                    citiesList.remove(location.toUpperCase())
+                    citiesList.remove(location.uppercase())
 
                     try {
                         val infections = row[infectionsIndex].replace(".", "").toInt()

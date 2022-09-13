@@ -57,7 +57,7 @@ object Parser : LiveTickerParser() {
         var errorGermanyRKI = false
         val threadGermanyRKI = Thread {
             try {
-                if (locations.any { it.toUpperCase() == RKIGermanyParser.location.toUpperCase() })
+                if (locations.any { it.uppercase() == RKIGermanyParser.location.uppercase() })
                     tickerGermanyRKI = RKIGermanyParser.parse(*locations)
                 else
                     errorGermanyRKI = true
@@ -115,7 +115,7 @@ object Parser : LiveTickerParser() {
         var errorWorldTicker = false
         val threadWorldWm = Thread {
             try {
-                if (locations.any { it.toUpperCase() == WmWorldParser.location.toUpperCase() })
+                if (locations.any { it.uppercase() == WmWorldParser.location.uppercase() })
                     worldTicker = WmWorldParser.parse(WmWorldParser.location)
                 else
                     errorWorldTicker = true
@@ -183,7 +183,7 @@ object Parser : LiveTickerParser() {
 
         for (city in cities) {
             val cityTickers: List<LiveTicker> =
-                liveTickers.filter { it.location.toUpperCase() == city.toUpperCase() }
+                liveTickers.filter { it.location.uppercase() == city.uppercase() }
 
             var cityTicker: LiveTicker? = null
             for (ticker in cityTickers) {
@@ -229,14 +229,14 @@ object Parser : LiveTickerParser() {
         for (ticker in liveTickers) {
             var nextTicker = false
             for (alreadyTicker in tickers) {
-                if (alreadyTicker.location.toUpperCase() == ticker.location.toUpperCase())
+                if (alreadyTicker.location.uppercase() == ticker.location.uppercase())
                     nextTicker = true
             }
             if (nextTicker)
                 continue
 
             val cityTickers: List<LiveTicker> =
-                liveTickers.filter { it.location.toUpperCase() == ticker.location.toUpperCase() }
+                liveTickers.filter { it.location.uppercase() == ticker.location.uppercase() }
 
             var cityTicker: LiveTicker? = null
             for (otherTickers in cityTickers) {
