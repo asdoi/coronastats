@@ -234,7 +234,6 @@ class MainActivity : AppCompatActivity() {
                 LibsBuilder()
                     .withActivityTitle(getString(R.string.about))
                     .withAboutIconShown(true)
-                    .withFields(R.string::class.java.fields)
                     .withLicenseShown(true)
                     .withAboutAppName(getString(R.string.app_name))
                     .withAboutSpecial1(getString(R.string.source_code))
